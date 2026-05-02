@@ -352,6 +352,32 @@
       100% { opacity: 0.6; }
     }
 
+
+
+    /* Summer Town Banner */
+    .summer-banner-section {
+      max-width: 900px;
+      margin: 0 auto 64px;
+    }
+
+    .summer-banner-card {
+      width: 100%;
+      height: clamp(320px, 36vw, 420px);
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid rgba(234, 223, 207, 0.9);
+      box-shadow: 0 18px 42px rgba(120, 82, 45, 0.08);
+      background: var(--paper);
+    }
+
+    .summer-banner-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
     /* Results */
     .results {
       display: none;
@@ -433,6 +459,75 @@
     .copy-button:hover {
       background: var(--sunflower);
       border-color: var(--sunflower);
+    }
+
+
+
+    /* Secondary Adjustment Placeholder */
+    .adjust-section {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 36px 40px;
+      margin-bottom: 32px;
+    }
+
+    .adjust-section .section-heading {
+      margin-bottom: 24px;
+    }
+
+    .adjust-section .section-heading h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
+    .adjust-section .section-heading p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+    }
+
+    .adjust-group-title {
+      margin: 24px 0 12px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+
+    .adjust-version-group,
+    .adjust-direction-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .adjust-option {
+      background: #fff;
+      border: 1px solid var(--line);
+      padding: 13px 18px;
+      font-family: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--ink);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .adjust-option:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #FFFDF8;
+    }
+
+    .adjust-option.active {
+      background: var(--sky);
+      color: var(--ink);
+      border-color: var(--sky);
+      box-shadow: 0 8px 18px rgba(74, 124, 140, 0.08);
     }
 
     /* Feedback & Footer */
@@ -535,6 +630,24 @@
     }
 
     @media (max-width: 600px) {
+      .summer-banner-section {
+        margin: 0 auto 44px;
+      }
+
+      .summer-banner-card {
+        height: clamp(220px, 58vw, 280px);
+      }
+
+
+      .adjust-section {
+        padding: 28px 24px;
+      }
+
+      .adjust-version-group,
+      .adjust-direction-grid {
+        grid-template-columns: 1fr;
+      }
+
       .choice-grid {
         grid-template-columns: 1fr;
       }
@@ -559,12 +672,12 @@
       <div class="hero">
         <div class="hero-content">
           <span class="hero-brand">葵的开口信</span>
-          <h1>有些话不是不想说，<br>是不知道怎么开口。</h1>
-          <p class="hero-subtitle">把想说的话先写下来，葵会帮你整理成比较好发送的版本。</p>
+          <h1>有些话不是不想说，<br>是怕一开口就说错。</h1>
+          <p class="hero-subtitle">把想说的话先写下来，葵帮你整理成清楚、温柔、可以发送的版本。</p>
           <a href="#scene-section" class="primary-button">开始写信</a>
         </div>
         <div class="visual-block">
-          <img src="picture/hero section picture.webp" alt="夏日信封与向日葵">
+          <img src="picture/hero-section-picture.webp" alt="夏日信封与向日葵">
         </div>
       </div>
     </section>
@@ -581,7 +694,7 @@
             <button class="choice" data-value="我想解释误会">我想解释误会</button>
             <button class="choice" data-value="我想委婉拒绝">我想委婉拒绝</button>
             <button class="choice" data-value="我想回复尴尬讯息">我想回复尴尬讯息</button>
-            <button class="choice" data-value="我想重新联系">我想重新联系</button>
+            <button class="choice" data-value="我想表达不舒服">我想表达不舒服</button>
             <button class="choice" data-value="我想好好结束关系">我想好好结束关系</button>
           </div>
         </div>
@@ -590,10 +703,10 @@
       <section class="section section-center" id="input-section">
         <div class="panel">
           <div class="section-heading">
-            <h2>先把想说的话写下来</h2>
-            <p>不用整理，也不用写得好听。想到什么就先写什么，葵会帮你整理得更好开口。</p>
+            <h2>先把发生了什么写下来</h2>
+            <p>不用整理，也不用写得好听。<br>你可以写：发生了什么、你想表达什么、你最怕对方误会什么。</p>
           </div>
-          <textarea id="rawInput" maxlength="1200" placeholder="例如：我和朋友冷战了一段时间，其实我想解释，但又怕自己说太多显得很卑微……"></textarea>
+          <textarea id="rawInput" maxlength="1200" placeholder="例如：我和朋友冷战了一段时间。我其实想解释，但又怕自己说太多显得很卑微。我想让对方知道我不是故意冷处理，只是不知道怎么开口……"></textarea>
           <div class="input-meta">
             <span>建议不要输入身份证、电话、住址等个人隐私信息</span>
             <span><span id="charCount">0</span>/1200</span>
@@ -627,6 +740,12 @@
     </main>
 
     <section class="section results" id="results-section">
+      <div class="summer-banner-section" aria-label="葵的夏日小镇氛围横幅">
+        <div class="summer-banner-card">
+          <img src="images/kui-summer-banner.webp" alt="夏日向日葵田、小镇远景与邮筒">
+        </div>
+      </div>
+
       <div class="results-header">
         <h2>葵整理了 3 个版本</h2>
         <p>可以先看短讯版。想说得完整一点，看认真版；怕太重，就看安全版。</p>
@@ -651,6 +770,31 @@
         <h3>安全版</h3>
         <p class="result-text" id="calmResult"></p>
         <button class="copy-button" data-copy="calmResult">复制安全版</button>
+      </div>
+
+
+      <div class="adjust-section" aria-label="二次调整功能占位">
+        <div class="section-heading">
+          <h2>还差一点的话，可以再调整</h2>
+          <p>选择一个版本，葵会把它改得更接近你想说的话。</p>
+        </div>
+
+        <div class="adjust-group-title">选择版本</div>
+        <div class="adjust-version-group">
+          <button class="adjust-option active" type="button" data-adjust-version="shortResult">短讯版</button>
+          <button class="adjust-option" type="button" data-adjust-version="letterResult">认真版</button>
+          <button class="adjust-option" type="button" data-adjust-version="calmResult">安全版</button>
+        </div>
+
+        <div class="adjust-group-title">选择调整方向</div>
+        <div class="adjust-direction-grid">
+          <button class="adjust-option" type="button" data-adjust-direction="natural">再自然一点</button>
+          <button class="adjust-option" type="button" data-adjust-direction="shorter">再短一点</button>
+          <button class="adjust-option" type="button" data-adjust-direction="less-humble">不要太卑微</button>
+          <button class="adjust-option" type="button" data-adjust-direction="less-formal">不要太正式</button>
+          <button class="adjust-option" type="button" data-adjust-direction="whatsapp">更像 WhatsApp</button>
+          <button class="adjust-option" type="button" data-adjust-direction="boundary">保留边界感</button>
+        </div>
       </div>
 
       <div class="light-feedback">
@@ -762,10 +906,14 @@
           letter: `看到你的讯息了，想了很久该怎么回。其实我也觉得之前的氛围有点微妙，所以刚才没有马上回复。我还是希望我们能像平常那样自然一点地交流，如果你不介意的话，我们就先跳过那个话题吧？`,
           calm: `我看到你的讯息了。简单回应一下：我觉得大家可能都有点想多了，没关系的。我们还是按原来的节奏来就好，不用太在意。`
         },
-        "我想重新联系": {
-          short: `好久不见呀，刚才突然想起以前的一些事，就想来跟你打个招呼。`,
-          letter: `不知道现在发消息会不会有点突兀。刚才无意间看到一些以前的东西，突然想知道你最近过得好不好。并没有什么特别的事，只是想轻轻跟你打个招呼。如果你方便的话就回一下，不方便也没关系的。`,
-          calm: `最近还好吗？突然想起好久没联系了，就过来问候一下。希望你一切都顺顺利利的。`
+        "我想表达不舒服": {
+          short: `有件事我想跟你说一下。其实我当时有点不舒服，但我不想用责怪的方式表达，所以想先把感受说清楚。`,
+          letter: `这件事我想了有一段时间。坦白说，当时我确实有点不舒服，但我一直不知道该怎么说，怕一开口就像是在指责你。
+
+我想表达的不是要争对错，而是希望你知道这件事对我的影响。对我来说，如果一直不说出来，它可能会慢慢变成我们之间的距离。
+
+所以我想用比较平静的方式告诉你：我在意这件事，也希望之后我们可以用更舒服的方式相处。`,
+          calm: `关于这件事，我想简单说一下我的感受。我当时确实有点不舒服，但我不是要责怪你，只是希望把自己的边界和感受说清楚。你不用马上回应，我只是觉得这件事不应该一直放着不说。`
         },
         "我想好好结束关系": {
           short: `我想了很久，觉得我们可能还是不太适合继续走下去了。希望能有个清晰的交代。`,
@@ -830,6 +978,24 @@
         } catch (error) {
           showToast("复制失败，请手动选择");
         }
+      });
+    });
+
+
+    document.querySelectorAll(".adjust-version-group .adjust-option").forEach(button => {
+      button.addEventListener("click", () => {
+        const group = button.closest(".adjust-version-group");
+        group.querySelectorAll(".adjust-option").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+      });
+    });
+
+    document.querySelectorAll(".adjust-direction-grid .adjust-option").forEach(button => {
+      button.addEventListener("click", () => {
+        const group = button.closest(".adjust-direction-grid");
+        group.querySelectorAll(".adjust-option").forEach(item => item.classList.remove("active"));
+        button.classList.add("active");
+        showToast("这个调整功能会在下一版开放");
       });
     });
 

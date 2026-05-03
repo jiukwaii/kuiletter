@@ -247,8 +247,9 @@
         margin: 0 auto;
       }
 
-      /* Situation Selection: 3 cols x 2 rows */
-      [data-group="scene"].choice-grid {
+      /* Scene & Concern Selection: 3 cols x 2 rows */
+      [data-group="scene"].choice-grid,
+      [data-group="concern"].choice-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
       }
@@ -399,6 +400,53 @@
       text-align: center;
     }
 
+    .risk-card {
+      background: linear-gradient(135deg, #FFFDF8, #FFF8EC);
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 36px 40px;
+      margin-bottom: 32px;
+    }
+
+    .risk-card h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--ink);
+    }
+
+    .risk-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .risk-item {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    .risk-label {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      color: #4A7C8C;
+      background: var(--sky);
+      border-radius: 999px;
+      padding: 4px 10px;
+    }
+
+    .risk-text {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--ink);
+    }
+
+
     .result-card {
       background: var(--paper);
       padding: 40px;
@@ -530,6 +578,66 @@
       box-shadow: 0 8px 18px rgba(74, 124, 140, 0.08);
     }
 
+
+
+    .risk-quote {
+      background: rgba(220, 236, 242, 0.45);
+      border: 1px solid rgba(220, 236, 242, 0.95);
+      border-radius: 18px;
+      padding: 18px 20px;
+      margin-bottom: 18px;
+      color: var(--ink);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .risk-quote strong {
+      color: #4A7C8C;
+      font-weight: 800;
+    }
+
+    .safety-note {
+      margin-top: 18px;
+      padding: 16px 18px;
+      background: #FFF8EC;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      font-size: 13px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .adjusted-result-card {
+      display: none;
+      margin-top: 24px;
+      background: #FFFDF8;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 12px 28px rgba(120, 82, 45, 0.05);
+    }
+
+    .adjusted-result-card.show {
+      display: block;
+      animation: fadeInUp 0.45s ease forwards;
+    }
+
+    .adjusted-result-card h3 {
+      font-size: 17px;
+      margin-bottom: 12px;
+    }
+
+    .adjusted-tag {
+      display: inline-block;
+      margin-bottom: 14px;
+      padding: 4px 12px;
+      background: var(--sky);
+      color: #4A7C8C;
+      font-size: 12px;
+      font-weight: 800;
+      border-radius: 999px;
+    }
+
     /* Feedback & Footer */
     .light-feedback {
       padding: 60px 0;
@@ -638,6 +746,62 @@
         height: clamp(220px, 58vw, 280px);
       }
 
+      .results {
+        padding-top: 40px;
+      }
+
+      .risk-card {
+        padding: 24px;
+        margin-bottom: 28px;
+        border-radius: 22px;
+      }
+
+      .risk-card h3 {
+        font-size: 17px;
+        margin-bottom: 16px;
+      }
+
+      .risk-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .risk-item {
+        padding: 18px;
+        border-radius: 16px;
+      }
+
+      .risk-label {
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        max-width: 100%;
+        margin-bottom: 10px;
+        padding: 5px 12px;
+        font-size: 12px;
+        line-height: 1.3;
+        white-space: nowrap;
+      }
+
+      .risk-text {
+        font-size: 15px;
+        line-height: 1.85;
+        word-break: normal;
+        overflow-wrap: anywhere;
+      }
+
+      .risk-quote {
+        padding: 16px;
+        font-size: 14px;
+      }
+
+      .adjusted-result-card {
+        padding: 22px;
+      }
+
+      .safety-note {
+        font-size: 12px;
+      }
 
       .adjust-section {
         padding: 28px 24px;
@@ -672,9 +836,9 @@
       <div class="hero">
         <div class="hero-content">
           <span class="hero-brand">葵的开口信</span>
-          <h1>有些话不是不想说，<br>是怕一开口就说错。</h1>
-          <p class="hero-subtitle">把想说的话先写下来，葵帮你整理成清楚、温柔、可以发送的版本。</p>
-          <a href="#scene-section" class="primary-button">开始写信</a>
+          <h1>有些话不是不想说，<br>是怕一发出去就说错。</h1>
+          <p class="hero-subtitle">粘贴你想发的讯息，葵会告诉你哪里可能被误会，并给你 3 个更安全的发送版本。</p>
+          <a href="#concern-section" class="primary-button">检查我的这段话</a>
         </div>
         <div class="visual-block">
           <img src="picture/hero-section-picture.webp" alt="夏日信封与向日葵">
@@ -683,19 +847,19 @@
     </section>
 
     <main class="main-grid">
-      <section class="section section-center" id="scene-section">
+      <section class="section section-center" id="concern-section">
         <div class="panel">
           <div class="section-heading">
-            <h2>你想先处理哪一种情况？</h2>
-            <p>选一个最接近你现在情况的选项</p>
+            <h2>你最担心这段话哪里不对？</h2>
+            <p>再选一个最接近你现在顾虑的地方。</p>
           </div>
-          <div class="choice-grid" data-group="scene">
-            <button class="choice active" data-value="道歉">我想道歉</button>
-            <button class="choice" data-value="我想解释误会">我想解释误会</button>
-            <button class="choice" data-value="我想委婉拒绝">我想委婉拒绝</button>
-            <button class="choice" data-value="我想回复尴尬讯息">我想回复尴尬讯息</button>
-            <button class="choice" data-value="我想表达不舒服">我想表达不舒服</button>
-            <button class="choice" data-value="我想好好结束关系">我想好好结束关系</button>
+          <div class="choice-grid" data-group="concern">
+            <button class="choice active" data-value="我怕太卑微">太卑微</button>
+            <button class="choice" data-value="我怕太冲">太冲</button>
+            <button class="choice" data-value="我怕对方误会">对方误会</button>
+            <button class="choice" data-value="我怕说太多">说太多</button>
+            <button class="choice" data-value="我怕不够清楚">不够清楚</button>
+            <button class="choice" data-value="我怕关系变尴尬">关系变尴尬</button>
           </div>
         </div>
       </section>
@@ -703,13 +867,16 @@
       <section class="section section-center" id="input-section">
         <div class="panel">
           <div class="section-heading">
-            <h2>先把发生了什么写下来</h2>
-            <p>不用整理，也不用写得好听。<br>你可以写：发生了什么、你想表达什么、你最怕对方误会什么。</p>
+            <h2>先把你想发的话贴上来</h2>
+            <p>不用写得完美。可以是草稿、想法、气话，葵会先帮你检查哪里可能让人误会。</p>
           </div>
-          <textarea id="rawInput" maxlength="1200" placeholder="例如：我和朋友冷战了一段时间。我其实想解释，但又怕自己说太多显得很卑微。我想让对方知道我不是故意冷处理，只是不知道怎么开口……"></textarea>
+          <textarea id="rawInput" maxlength="1200" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
           <div class="input-meta">
             <span>建议不要输入身份证、电话、住址等个人隐私信息</span>
             <span><span id="charCount">0</span>/1200</span>
+          </div>
+          <div class="safety-note">
+            如果涉及威胁、骚扰、分手冲突、暴力风险，请先找可信任的人或专业人士，不要只依赖改写工具。
           </div>
         </div>
       </section>
@@ -717,8 +884,8 @@
       <section class="section section-center" id="tone-section">
         <div class="panel">
           <div class="section-heading">
-            <h2>你希望这段话听起来怎样？</h2>
-            <p>选一个最接近你想要的感觉。</p>
+            <h2>你希望最后发出去的语气像哪一种？</h2>
+            <p>选一个最接近你想要的发送策略。</p>
           </div>
           <div class="choice-grid" data-group="tone">
             <button class="choice active" data-value="温柔但不卑微">温柔但不卑微</button>
@@ -730,10 +897,10 @@
 
         <div class="generate-area">
           <button class="generate-button" id="generateBtn">
-            <span>交给葵整理</span>
+            <span>让葵检查这段话</span>
           </button>
           <div class="loading" id="loadingBox">
-            <span>葵正在整理这封信……</span>
+            <span>葵正在帮你检查这段话……</span>
           </div>
         </div>
       </section>
@@ -746,44 +913,64 @@
         </div>
       </div>
 
+      <div class="results-header risk-header">
+        <h2>葵先帮你看了一下</h2>
+        <p>先检查这段话可能让人误会的地方，再整理成可以发送的版本。</p>
+      </div>
+
+      <div class="risk-card">
+        <h3>发送前检查</h3>
+        <div class="risk-quote" id="quoteResult">我会先看你原文里容易被误会的地方。</div>
+        <div class="risk-grid">
+          <div class="risk-item">
+            <span class="risk-label">可能的风险</span>
+            <p class="risk-text" id="riskResult">这段话可能会让对方感觉被责怪，或让你的重点被情绪盖过去。</p>
+          </div>
+          <div class="risk-item">
+            <span class="risk-label">建议方向</span>
+            <p class="risk-text" id="adviceResult">先说自己的感受，再说明你希望如何沟通，不急着要求对方马上回应。</p>
+          </div>
+        </div>
+      </div>
+
       <div class="results-header">
         <h2>葵整理了 3 个版本</h2>
-        <p>可以先看短讯版。想说得完整一点，看认真版；怕太重，就看安全版。</p>
+        <p>短讯版适合 WhatsApp 直接发；温和版适合降低冲突；边界版适合不想再委屈自己。</p>
       </div>
 
       <div class="result-card">
-        <span class="result-tag">适合直接发送</span>
+        <span class="result-tag">适合 WhatsApp 直接发</span>
         <h3>短讯版</h3>
         <p class="result-text" id="shortResult"></p>
         <button class="copy-button" data-copy="shortResult">复制短讯版</button>
       </div>
 
       <div class="result-card">
-        <span class="result-tag">适合认真表达</span>
-        <h3>认真版</h3>
+        <span class="result-tag">适合降低冲突</span>
+        <h3>温和版</h3>
         <p class="result-text" id="letterResult"></p>
-        <button class="copy-button" data-copy="letterResult">复制认真版</button>
+        <button class="copy-button" data-copy="letterResult">复制温和版</button>
       </div>
 
       <div class="result-card">
-        <span class="result-tag">适合保持边界</span>
-        <h3>安全版</h3>
+        <span class="result-tag">适合不想再委屈自己</span>
+        <h3>边界版</h3>
         <p class="result-text" id="calmResult"></p>
-        <button class="copy-button" data-copy="calmResult">复制安全版</button>
+        <button class="copy-button" data-copy="calmResult">复制边界版</button>
       </div>
 
 
       <div class="adjust-section" aria-label="二次调整功能占位">
         <div class="section-heading">
-          <h2>还差一点的话，可以再调整</h2>
-          <p>选择一个版本，葵会把它改得更接近你想说的话。</p>
+          <h2>发之前还不放心，可以再调整</h2>
+          <p>选择一个版本，让葵再帮你改得更自然、更安全一点。</p>
         </div>
 
         <div class="adjust-group-title">选择版本</div>
         <div class="adjust-version-group">
           <button class="adjust-option active" type="button" data-adjust-version="shortResult">短讯版</button>
-          <button class="adjust-option" type="button" data-adjust-version="letterResult">认真版</button>
-          <button class="adjust-option" type="button" data-adjust-version="calmResult">安全版</button>
+          <button class="adjust-option" type="button" data-adjust-version="letterResult">温和版</button>
+          <button class="adjust-option" type="button" data-adjust-version="calmResult">边界版</button>
         </div>
 
         <div class="adjust-group-title">选择调整方向</div>
@@ -794,6 +981,13 @@
           <button class="adjust-option" type="button" data-adjust-direction="less-formal">不要太正式</button>
           <button class="adjust-option" type="button" data-adjust-direction="whatsapp">更像 WhatsApp</button>
           <button class="adjust-option" type="button" data-adjust-direction="boundary">保留边界感</button>
+        </div>
+
+        <div class="adjusted-result-card" id="adjustedResultCard">
+          <span class="adjusted-tag" id="adjustedTag">葵重新整理了一版</span>
+          <h3>调整后的版本</h3>
+          <p class="result-text" id="adjustedResult"></p>
+          <button class="copy-button" data-copy="adjustedResult">复制这个版本</button>
         </div>
       </div>
 
@@ -808,7 +1002,7 @@
     </section>
 
     <footer class="footer">
-      <p>葵只帮你整理表达，不替你决定关系。愿每一句难开口的话，都能被温柔接住。</p>
+      <p>葵只帮你检查和整理表达，不替你决定关系。愿每一句要送出去的话，都能被温柔接住。</p>
     </footer>
   </div>
 
@@ -816,7 +1010,7 @@
 
   <script>
     const state = {
-      scene: "道歉",
+      concern: "我怕太卑微",
       tone: "温柔但不卑微",
       text: ""
     };
@@ -837,6 +1031,12 @@
     const shortResult = document.getElementById("shortResult");
     const letterResult = document.getElementById("letterResult");
     const calmResult = document.getElementById("calmResult");
+    const riskResult = document.getElementById("riskResult");
+    const adviceResult = document.getElementById("adviceResult");
+    const quoteResult = document.getElementById("quoteResult");
+    const adjustedResultCard = document.getElementById("adjustedResultCard");
+    const adjustedTag = document.getElementById("adjustedTag");
+    const adjustedResult = document.getElementById("adjustedResult");
     const toast = document.getElementById("toast");
 
     document.querySelectorAll(".choice-grid").forEach(group => {
@@ -858,16 +1058,20 @@
     });
 
     generateBtn.addEventListener("click", () => {
-      const userText = state.text || "我有一些话想说，但不知道怎么开口。";
+      const userText = state.text || "我有一段话想发出去，但不确定这样说会不会让人误会。";
 
       generateBtn.disabled = true;
       loadingBox.classList.add("show");
       resultsSection.classList.remove("show");
 
       document.querySelectorAll(".light-feedback .mini-option").forEach(opt => opt.classList.remove("active"));
+      adjustedResultCard.classList.remove("show");
 
       setTimeout(() => {
-        const outputs = createMockOutputs(state.scene, state.tone, userText);
+        const outputs = createMockOutputs(state.concern, state.tone, userText);
+        riskResult.textContent = outputs.risk;
+        adviceResult.textContent = outputs.advice;
+        quoteResult.innerHTML = outputs.quoted;
         shortResult.textContent = outputs.short;
         letterResult.textContent = outputs.letter;
         calmResult.textContent = outputs.calm;
@@ -882,89 +1086,97 @@
       }, 1200);
     });
 
-    function createMockOutputs(scene, tone, text) {
-      const userSnippet = text.length > 50 ? text.slice(0, 50) + "..." : text;
-      
-      const templates = {
-        "道歉": {
-          short: `对不起哈，关于之前的事我反思了一下，确实是我处理得不够好。希望能跟你说声抱歉。`,
-          letter: `最近一直在想之前发生的事。坦白说，我意识到自己在某些地方做得不对，让你不舒服了，真的很抱歉。写这封信不是为了求你原谅，只是觉得如果不正式跟你说声对不起，我心里会一直过不去。希望你能接收到这份歉意。`,
-          calm: `关于之前那件事，我想了想还是想跟你道个歉。我不希望这件事变成我们之间的负担，所以简单说明一下我的态度。如果你还没准备好回应也没关系，我尊重你的感受。`
-        },
-        "我想解释误会": {
-          short: `其实之前那件事可能有些误会，我刚才想了想，还是想跟你简单说清楚。`,
-          letter: `我看到我们之间似乎有些误会，所以想认真把我的想法说一下。我写这些不是为了争谁对谁错，只是觉得有些信息可能传递得不太准确，导致了现在的隔阂。我非常珍视我们的关系，所以希望能把话说开，减少不必要的猜疑。`,
-          calm: `我想针对之前那件事简单说明一下我的原意，主要是怕有些细节被误读了。我并不强求我们立刻达成共识，只是觉得把客观情况说清楚对彼此都好。`
-        },
-        "我想委婉拒绝": {
-          short: `谢谢你的好意和邀请，不过我最近确实不太方便，可能没办法参加了。`,
-          letter: `很感谢你想到我，也非常谢谢你的这份心意。我认真考虑了一下，因为个人精力和时间的关系，目前可能无法给予你期待的回应。希望能得到你的理解，也祝你接下来的计划一切顺利。`,
-          calm: `谢谢你的邀请。目前我各方面的安排都比较满，可能无法参与。简单跟你说明一下，希望不会对你造成困扰。`
-        },
-        "我想回复尴尬讯息": {
-          short: `刚才看到你的讯息啦，刚才在忙没顾上回。其实我也觉得之前的对话有点突然哈。`,
-          letter: `看到你的讯息了，想了很久该怎么回。其实我也觉得之前的氛围有点微妙，所以刚才没有马上回复。我还是希望我们能像平常那样自然一点地交流，如果你不介意的话，我们就先跳过那个话题吧？`,
-          calm: `我看到你的讯息了。简单回应一下：我觉得大家可能都有点想多了，没关系的。我们还是按原来的节奏来就好，不用太在意。`
-        },
-        "我想表达不舒服": {
-          short: `有件事我想跟你说一下。其实我当时有点不舒服，但我不想用责怪的方式表达，所以想先把感受说清楚。`,
-          letter: `这件事我想了有一段时间。坦白说，当时我确实有点不舒服，但我一直不知道该怎么说，怕一开口就像是在指责你。
+    function extractSignalWords(text) {
+      const riskyWords = [
+        "随便", "算了", "你每次", "你总是", "为什么", "到底",
+        "无所谓", "都是你", "不想理", "对不起", "拜托", "求你",
+        "你根本", "你从来", "受够", "烦死", "懒得说", "随你"
+      ];
 
-我想表达的不是要争对错，而是希望你知道这件事对我的影响。对我来说，如果一直不说出来，它可能会慢慢变成我们之间的距离。
+      return riskyWords.filter(word => text.includes(word)).slice(0, 3);
+    }
 
-所以我想用比较平静的方式告诉你：我在意这件事，也希望之后我们可以用更舒服的方式相处。`,
-          calm: `关于这件事，我想简单说一下我的感受。我当时确实有点不舒服，但我不是要责怪你，只是希望把自己的边界和感受说清楚。你不用马上回应，我只是觉得这件事不应该一直放着不说。`
+    function createMockOutputs(concern, tone, text) {
+      const userSnippet = text.length > 60 ? text.slice(0, 60) + "..." : text;
+      const signals = extractSignalWords(text);
+      const quoted = signals.length
+        ? `我注意到这段里有几个地方可能需要小心：<strong>${signals.join("、")}</strong>。`
+        : "我没有看到特别刺耳的词，但这段话的表达顺序还可以更清楚。";
+
+      const riskMap = {
+        "我怕太卑微": {
+          risk: "这段话可能把重心放在讨好或反复解释上，让你显得太委屈，也容易让对方忽略你真正想表达的重点。",
+          advice: "保留真诚，但减少过度道歉。先说清楚你的感受和边界，再给对方回应空间。"
         },
-        "我想好好结束关系": {
-          short: `我想了很久，觉得我们可能还是不太适合继续走下去了。希望能有个清晰的交代。`,
-          letter: `这段时间我认真审视了我们的关系。我觉得我们需要给彼此一个正式的告别，这对我们以后的生活都是一种负责。我写这些不是为了指责谁，只是觉得我们目前的节奏已经不再一致了。希望以后想起这段时光时，我们都能是平静且体面的。保重。`,
-          calm: `我觉得我们的关系到这里结束可能对彼此都好。简单说明一下我的决定，主要是希望能保持一份基本的边界感，不再互相拉扯。祝你以后一切顺利。`
+        "我怕太冲": {
+          risk: "这段话可能会让对方感觉被指责，容易把沟通变成争辩。",
+          advice: "先用“我感受到……”表达自己的状态，再说明具体事件，避免直接给对方下判断。"
+        },
+        "我怕对方误会": {
+          risk: "这段话的重点可能不够清楚，对方可能只看到情绪，而没有理解你的真正意思。",
+          advice: "先讲目的，再讲感受，最后补一句你不是要吵架，而是想把话说清楚。"
+        },
+        "我怕说太多": {
+          risk: "这段话如果太长，可能会让对方有压力，也可能让你的重点被淹没。",
+          advice: "把内容压缩成三部分：发生了什么、你的感受、你希望接下来怎样。"
+        },
+        "我怕不够清楚": {
+          risk: "这段话可能表达了情绪，但没有明确说出你真正想要对方理解的重点。",
+          advice: "直接点出核心信息，减少绕圈，让对方知道你是在解释、表达感受，还是提出边界。"
+        },
+        "我怕关系变尴尬": {
+          risk: "这段话如果太沉重，可能让聊天气氛变僵，也可能让对方不知道怎么回应。",
+          advice: "语气保持轻一点，给对方台阶，也给自己留空间，不把一次对话变成最终判决。"
         }
       };
 
-      const base = templates[scene] || templates["道歉"];
-      
-      const toneStyles = {
+
+      const check = riskMap[concern] || riskMap["我怕太卑微"];
+
+      const toneStyle = {
         "温柔但不卑微": {
-          prefix: "想了想，还是想和你说呢...",
-          ending: "我尊重你的节奏，不急哈。",
-          wrap: (t) => t.replace(/。/g, "呢。").replace(/？/g, "呀？"),
-          modal: "稍微"
+          opening: "我想了想，还是想把这件事说清楚。",
+          close: "你不用马上回应，我只是希望这件事不要一直卡在我们之间。"
         },
         "真诚但不给压力": {
-          prefix: "坦白说，我是这样想的：",
-          ending: "你不用急着回我，我只是想把话说开，别有压力。",
-          wrap: (t) => t.replace(/。/g, "吧。"),
-          modal: "诚实地"
+          opening: "我想认真说一下我的想法。",
+          close: "你可以慢慢看，不用急着回复。"
         },
         "像平常聊天一样": {
-          prefix: "嘿，其实哈...",
-          ending: "先这样啦，你先忙！",
-          wrap: (t) => t.replace(/。/g, "哈。").replace(/，/g, " ").replace(/我/g, "我"), 
-          modal: "就"
+          opening: "我想跟你说一下刚才那件事。",
+          close: "我不是想吵架，只是想讲清楚一点。"
         },
         "保持边界但不冷漠": {
-          prefix: "简单说明一下：",
-          ending: "祝好。",
-          wrap: (t) => t, 
-          modal: "明确地"
+          opening: "我想简单说明一下我的感受和边界。",
+          close: "我尊重你的想法，也希望我的感受能被理解。"
         }
+      }[tone] || {
+        opening: "我想把这件事说清楚。",
+        close: "你不用马上回应，我只是希望我们不要误会彼此。"
       };
 
-      const style = toneStyles[tone] || toneStyles["温柔但不卑微"];
-
-      let shortText = base.short;
-      if (tone === "像平常聊天一样") {
-        shortText = shortText.replace(/希望能跟你说声抱歉/g, "跟你说声抱歉哈")
-                            .replace(/希望能跟你简单说清楚/g, "想跟你说明白哈")
-                            .replace(/希望能得到你的理解/g, "先跟你说声哈")
-                            .replace(/希望能有个清晰的交代/g, "就先到这吧");
-      }
-
       return {
-        short: `【短讯版】\n${style.prefix}\n${style.wrap(shortText)}\n\n我的想法：${userSnippet}\n${style.ending}`,
-        letter: `【认真版】\n${style.prefix}\n${base.letter}\n\n关于我想说的：\n"${text}"\n\n${style.ending}`,
-        calm: `【安全版】\n${style.modal}${base.calm}\n\n关于"${userSnippet}"，我的态度就是这样，祝好。`
+        risk: check.risk,
+        advice: check.advice,
+        quoted,
+        short: `${toneStyle.opening}
+
+关于刚才那段话，我其实有点在意。我不是想责怪你，只是想让你知道我的感受。
+
+${toneStyle.close}`,
+        letter: `${toneStyle.opening}
+
+我看了自己原本想发的内容：
+“${userSnippet}”
+
+我真正想表达的是：这件事让我有点不舒服，但我不希望我们把它变成争吵。我希望可以把话说清楚，而不是彼此猜来猜去。
+
+${toneStyle.close}`,
+        calm: `我想把这件事说清楚，但不想把语气说重。
+
+我的重点不是要追究谁对谁错，而是希望你知道这件事对我有影响。之后如果可以，我希望我们都能用更舒服的方式沟通。
+
+${toneStyle.close}`
       };
     }
 
@@ -981,7 +1193,6 @@
       });
     });
 
-
     document.querySelectorAll(".adjust-version-group .adjust-option").forEach(button => {
       button.addEventListener("click", () => {
         const group = button.closest(".adjust-version-group");
@@ -990,12 +1201,68 @@
       });
     });
 
+    function getSelectedAdjustText() {
+      const selectedVersion = document.querySelector(".adjust-version-group .adjust-option.active");
+      const targetId = selectedVersion ? selectedVersion.dataset.adjustVersion : "shortResult";
+      const source = document.getElementById(targetId);
+      return source ? source.textContent.trim() : "";
+    }
+
+    function rewriteAdjustText(text, direction) {
+      const compact = text.replace(/\n{2,}/g, "\n").trim();
+      const directionMap = {
+        natural: {
+          label: "已帮你改得更自然一点",
+          prefix: "我想自然一点说："
+        },
+        shorter: {
+          label: "已帮你改得更短一点",
+          prefix: "简单说就是："
+        },
+        "less-humble": {
+          label: "已帮你减少卑微感",
+          prefix: "我想真诚一点说，但也保留自己的边界："
+        },
+        "less-formal": {
+          label: "已帮你改得不那么正式",
+          prefix: "换成比较像聊天的说法："
+        },
+        whatsapp: {
+          label: "已帮你改得更像 WhatsApp",
+          prefix: "可以这样发："
+        },
+        boundary: {
+          label: "已帮你加强边界感",
+          prefix: "我想把话说清楚，也保留一点边界："
+        }
+      };
+      const setting = directionMap[direction] || directionMap.natural;
+      const shorterText = compact.length > 180 ? compact.slice(0, 180) + "……" : compact;
+      return {
+        label: setting.label,
+        text: `${setting.prefix}
+
+${shorterText}`
+      };
+    }
+
     document.querySelectorAll(".adjust-direction-grid .adjust-option").forEach(button => {
       button.addEventListener("click", () => {
         const group = button.closest(".adjust-direction-grid");
         group.querySelectorAll(".adjust-option").forEach(item => item.classList.remove("active"));
         button.classList.add("active");
-        showToast("这个调整功能会在下一版开放");
+
+        const sourceText = getSelectedAdjustText();
+        if (!sourceText) {
+          showToast("先生成版本，再进行调整");
+          return;
+        }
+
+        const result = rewriteAdjustText(sourceText, button.dataset.adjustDirection);
+        adjustedTag.textContent = result.label;
+        adjustedResult.textContent = result.text;
+        adjustedResultCard.classList.add("show");
+        showToast(result.label);
       });
     });
 

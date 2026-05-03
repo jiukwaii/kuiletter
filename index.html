@@ -247,8 +247,7 @@
         margin: 0 auto;
       }
 
-      /* Scene & Concern Selection: 3 cols x 2 rows */
-      [data-group="scene"].choice-grid,
+      /* Concern Selection: 3 cols x 2 rows */
       [data-group="concern"].choice-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
@@ -851,7 +850,7 @@
         <div class="panel">
           <div class="section-heading">
             <h2>你最担心这段话哪里不对？</h2>
-            <p>再选一个最接近你现在顾虑的地方。</p>
+            <p>选一个最接近你现在顾虑的地方，葵会先帮你检查发送风险。</p>
           </div>
           <div class="choice-grid" data-group="concern">
             <button class="choice active" data-value="我怕太卑微">太卑微</button>
@@ -1058,7 +1057,7 @@
     });
 
     generateBtn.addEventListener("click", () => {
-      const userText = state.text || "我有一段话想发出去，但不确定这样说会不会让人误会。";
+      const userText = state.text || "我不是要吵架，只是有些话憋着不说也不舒服。";
 
       generateBtn.disabled = true;
       loadingBox.classList.add("show");

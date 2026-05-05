@@ -1,1284 +1,176 @@
 <!DOCTYPE html>
+
 <html lang="zh-Hans">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>葵的开口信</title>
-  <style>
-    :root {
-      /* 夏日信纸系配色方案 */
-      --bg: #FFF8EC;          /* 奶油米白背景 */
-      --ink: #3F352C;         /* 柔和深棕灰文字 */
-      --muted: #7B6F63;       /* 暖灰棕次要文字 */
-      --line: #EADFCF;        /* 浅米棕边框 */
-      --paper: #FFFDF8;       /* 信纸白 */
-      --accent: #B85C4A;      /* 邮差包红 */
-      --accent-hover: #9F4A3B; /* 深红棕 */
-      --sunflower: #F4C95D;   /* 向日葵黄 */
-      --sky: #DCECF2;         /* 低饱和浅蓝 */
-      --shadow: 0 16px 40px rgba(120, 82, 45, 0.06); /* 柔和纸张阴影 */
-      --radius: 22px;         /* 柔和圆角 */
-    }
-
-    * {
-      box-sizing: border-box;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* 全局文字选取高亮效果 - 采用半透明叠加方案，保持文字原色 */
-    ::selection {
-      background: rgba(123, 111, 99, 0.15); /* 采用 --muted 暖灰棕色的半透明版本 */
-    }
-
-    ::-moz-selection {
-      background: rgba(123, 111, 99, 0.15);
-    }
-
-    body {
-      margin: 0;
-      font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif;
-      color: var(--ink);
-      background-color: var(--bg);
-      min-height: 100vh;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Typography */
-    h1, h2, h3 {
-      font-weight: 800;
-      margin: 0;
-    }
-
-    .page {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 24px; /* 移除顶部 padding，由 section 处理 */
-    }
-
-    /* Section Wrapper for "One Chapter per Page" feel */
-    .section {
-      min-height: 95vh; /* 留出一点点空间作为向下滚动的暗示 */
-      display: flex;
-      flex-direction: column;
-      padding: 60px 0;
-      scroll-margin-top: 0;
-    }
-
-    /* Used for sections that need content vertically centered */
-    .section-center {
-      justify-content: center;
-    }
-
-    /* Hero Section as a standalone entry */
-    .hero-section {
-      min-height: 95vh;
-      display: flex;
-      flex-direction: column;
-      padding: 80px 0 60px; /* 增加顶部间距代替已移除的 Topbar */
-    }
-
-    .hero-brand {
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--muted);
-      margin-bottom: 24px;
-      display: block;
-      letter-spacing: 1px;
-    }
-
-    /* Hero Section Content */
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: center;
-      flex: 1;
-    }
-
-    .hero-content {
-      text-align: left;
-    }
-
-    .hero-tag {
-      display: inline-block;
-      padding: 6px 14px;
-      background: var(--sky);
-      color: #4A7C8C;
-      font-size: 13px;
-      border-radius: 999px;
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    h1 {
-      font-size: clamp(28px, 5vw, 40px);
-      line-height: 1.4;
-      margin-bottom: 24px;
-      color: var(--ink);
-    }
-
-    .hero-subtitle {
-      font-size: 18px;
-      color: var(--muted);
-      margin-bottom: 40px;
-    }
-
-    .visual-block {
-      background: linear-gradient(135deg, var(--sky), #EAF4F8);
-      aspect-ratio: 4/3;
-      border-radius: var(--radius); /* 统一圆角参数 */
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .visual-block img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-
-    /* 移除原本的 CSS 装饰，由真实图片代替 */
-    .visual-block::before,
-    .visual-block::after {
-      display: none;
-    }
-
-    .primary-button {
-      display: inline-flex;
-      align-items: center;
-      padding: 18px 48px;
-      background: var(--accent);
-      color: #fff;
-      text-decoration: none;
-      font-size: 18px;
-      font-weight: 800;
-      border-radius: 999px;
-      transition: all 0.3s ease;
-      box-shadow: 0 10px 25px rgba(184, 92, 74, 0.2);
-    }
-
-    .primary-button:hover {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(184, 92, 74, 0.3);
-    }
-
-    /* Main Grid Layout */
-    .main-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 0; /* 由 .section 处理间距 */
-    }
-
-    .panel {
-      padding: 40px;
-      background: var(--paper);
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-    }
-
-    .section-heading {
-      margin-bottom: 32px;
-    }
-
-    .section-heading h2 {
-      font-size: 22px;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-
-    .section-heading p {
-      font-size: 15px;
-      color: var(--muted);
-    }
-
-    /* Choice Grid Base (Mobile First) */
-    .choice-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 12px;
-    }
-
-    .choice {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      padding: 20px;
-      border-radius: 18px;
-      font-family: inherit;
-      font-size: 16px;
-      color: var(--ink);
-      font-weight: 600;
-      text-align: center;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 64px;
-    }
-
-    .choice:hover {
-      background: var(--sky);
-      border-color: var(--sky);
-    }
-
-    .choice.active {
-      background: var(--sunflower);
-      border-color: var(--accent);
-      color: var(--ink);
-    }
-
-    /* Desktop Specific Refinement */
-    @media (min-width: 1024px) {
-      .main-grid {
-        max-width: 900px;
-        margin: 0 auto;
-      }
-
-      /* Concern Selection: 3 cols x 2 rows */
-      [data-group="concern"].choice-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
-      }
-
-      /* Tone Selection: 4 cols x 1 row */
-      [data-group="tone"].choice-grid {
-        grid-template-columns: repeat(4, 1fr);
-        gap: 16px;
-      }
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 240px;
-      padding: 24px;
-      background: #ffffff;
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      font-family: inherit;
-      font-size: 16px;
-      line-height: 1.8;
-      color: var(--ink);
-      resize: none;
-      outline: none;
-      transition: all 0.3s ease;
-    }
-
-    textarea:focus {
-      border-color: var(--accent);
-      background: #fff;
-    }
-
-    textarea::placeholder {
-      color: #BDB4A8;
-    }
-
-    .input-meta {
-      display: flex;
-      justify-content: space-between;
-      padding-top: 12px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .generate-area {
-      padding: 80px 0;
-      text-align: center; /* 默认居中，确保手机端也美观 */
-    }
-
-    .generate-button {
-      background: var(--accent);
-      color: #fff;
-      border: none;
-      padding: 18px 48px; /* 调整为更精致的比例 */
-      font-size: 16px;
-      font-weight: 800;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      box-shadow: 0 10px 25px rgba(184, 92, 74, 0.2);
-    }
-
-    @media (min-width: 1024px) {
-      .generate-button {
-        min-width: 240px; /* 桌面端设定一个稳重的最小宽度 */
-      }
-    }
-
-    .generate-button:hover:not(:disabled) {
-      background: var(--accent-hover);
-      transform: translateY(-2px);
-      box-shadow: 0 15px 30px rgba(184, 92, 74, 0.3);
-    }
-
-    .generate-button:disabled {
-      background: #D1C8BD;
-      cursor: wait;
-      box-shadow: none;
-    }
-
-    .loading {
-      display: none;
-      margin-top: 24px;
-      font-size: 15px;
-      color: var(--muted);
-      font-weight: 600;
-    }
-
-    .loading.show {
-      display: block;
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { opacity: 0.6; }
-      50% { opacity: 1; }
-      100% { opacity: 0.6; }
-    }
-
-
-
-    /* Summer Town Banner */
-    .summer-banner-section {
-      max-width: 900px;
-      margin: 0 auto 64px;
-    }
-
-    .summer-banner-card {
-      width: 100%;
-      height: clamp(320px, 36vw, 420px);
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1px solid rgba(234, 223, 207, 0.9);
-      box-shadow: 0 18px 42px rgba(120, 82, 45, 0.08);
-      background: var(--paper);
-    }
-
-    .summer-banner-card img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      object-position: center;
-    }
-
-    /* Results */
-    .results {
-      display: none;
-      padding-top: 60px;
-    }
-
-    .results.show {
-      display: block;
-      animation: fadeInUp 0.6s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(8px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .results-header {
-      margin-bottom: 40px;
-      text-align: center;
-    }
-
-    .risk-card {
-      background: linear-gradient(135deg, #FFFDF8, #FFF8EC);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 36px 40px;
-      margin-bottom: 32px;
-    }
-
-    .risk-card h3 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: var(--ink);
-    }
-
-    .risk-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .risk-item {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .risk-label {
-      display: inline-block;
-      margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #4A7C8C;
-      background: var(--sky);
-      border-radius: 999px;
-      padding: 4px 10px;
-    }
-
-    .risk-text {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--ink);
-    }
-
-
-    .result-card {
-      background: var(--paper);
-      padding: 40px;
-      margin-bottom: 32px;
-      border-radius: 24px;
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      position: relative;
-    }
-
-    .result-tag {
-      display: inline-block;
-      padding: 4px 12px;
-      background: var(--sky);
-      color: #4A7C8C;
-      font-size: 12px;
-      border-radius: 8px;
-      margin-bottom: 16px;
-      font-weight: 800;
-    }
-
-    .result-card h3 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: var(--ink);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .result-card h3::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-    }
-
-    .result-text {
-      font-size: 16px;
-      line-height: 1.9;
-      color: var(--ink);
-      white-space: pre-line;
-      margin-bottom: 32px;
-    }
-
-    .copy-button {
-      background: #F8F4EF;
-      border: 1px solid var(--line);
-      padding: 12px 28px;
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--ink);
-      border-radius: 12px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .copy-button:hover {
-      background: var(--sunflower);
-      border-color: var(--sunflower);
-    }
-
-
-
-    /* Secondary Adjustment Placeholder */
-    .adjust-section {
-      background: var(--paper);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 36px 40px;
-      margin-bottom: 32px;
-    }
-
-    .adjust-section .section-heading {
-      margin-bottom: 24px;
-    }
-
-    .adjust-section .section-heading h2 {
-      font-size: 22px;
-      margin-bottom: 8px;
-      color: var(--ink);
-    }
-
-    .adjust-section .section-heading p {
-      margin: 0;
-      font-size: 15px;
-      color: var(--muted);
-    }
-
-    .adjust-group-title {
-      margin: 24px 0 12px;
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .adjust-version-group,
-    .adjust-direction-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .adjust-option {
-      background: #fff;
-      border: 1px solid var(--line);
-      padding: 13px 18px;
-      font-family: inherit;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--ink);
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .adjust-option:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: #FFFDF8;
-    }
-
-    .adjust-option.active {
-      background: var(--sky);
-      color: var(--ink);
-      border-color: var(--sky);
-      box-shadow: 0 8px 18px rgba(74, 124, 140, 0.08);
-    }
-
-
-
-    .risk-quote {
-      background: rgba(220, 236, 242, 0.45);
-      border: 1px solid rgba(220, 236, 242, 0.95);
-      border-radius: 18px;
-      padding: 18px 20px;
-      margin-bottom: 18px;
-      color: var(--ink);
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .risk-quote strong {
-      color: #4A7C8C;
-      font-weight: 800;
-    }
-
-    .safety-note {
-      margin-top: 18px;
-      padding: 16px 18px;
-      background: #FFF8EC;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      font-size: 13px;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-
-    .adjusted-result-card {
-      display: none;
-      margin-top: 24px;
-      background: #FFFDF8;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: 0 12px 28px rgba(120, 82, 45, 0.05);
-    }
-
-    .adjusted-result-card.show {
-      display: block;
-      animation: fadeInUp 0.45s ease forwards;
-    }
-
-    .adjusted-result-card h3 {
-      font-size: 17px;
-      margin-bottom: 12px;
-    }
-
-    .adjusted-tag {
-      display: inline-block;
-      margin-bottom: 14px;
-      padding: 4px 12px;
-      background: var(--sky);
-      color: #4A7C8C;
-      font-size: 12px;
-      font-weight: 800;
-      border-radius: 999px;
-    }
-
-    /* Feedback & Footer */
-    .light-feedback {
-      padding: 60px 0;
-      text-align: center;
-    }
-
-    .light-feedback p {
-      font-size: 18px;
-      font-weight: 800;
-      margin-bottom: 24px;
-    }
-
-    .feedback-buttons {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-    }
-
-    .mini-option {
-      background: #fff;
-      border: 1px solid var(--line);
-      padding: 12px 24px;
-      font-size: 14px;
-      font-weight: 600;
-      border-radius: 999px;
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .mini-option:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-    }
-
-    .mini-option.active {
-      background: var(--sky);
-      color: var(--ink);
-      border-color: var(--sky);
-    }
-
-    .footer {
-      padding: 80px 0 40px;
-      text-align: center;
-      font-size: 14px;
-      color: var(--muted);
-      border-top: 1px solid var(--line);
-    }
-
-    .toast {
-      position: fixed;
-      bottom: 40px;
-      left: 50%;
-      transform: translateX(-50%) translateY(20px);
-      background: var(--ink);
-      color: #fff;
-      padding: 14px 28px;
-      border-radius: 999px;
-      font-size: 14px;
-      font-weight: 600;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-      z-index: 1000;
-    }
-
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    @media (max-width: 900px) {
-      .section {
-        min-height: auto;
-        padding: 40px 0;
-      }
-      .section:first-of-type {
-        min-height: 95vh;
-        display: flex;
-        flex-direction: column;
-      }
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-        gap: 40px;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-      .hero-content {
-        text-align: center;
-      }
-      .visual-block {
-        order: -1;
-        max-width: 500px;
-        margin: 0 auto;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .summer-banner-section {
-        margin: 0 auto 44px;
-      }
-
-      .summer-banner-card {
-        height: clamp(220px, 58vw, 280px);
-      }
-
-      .results {
-        padding-top: 40px;
-      }
-
-      .risk-card {
-        padding: 24px;
-        margin-bottom: 28px;
-        border-radius: 22px;
-      }
-
-      .risk-card h3 {
-        font-size: 17px;
-        margin-bottom: 16px;
-      }
-
-      .risk-grid {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .risk-item {
-        padding: 18px;
-        border-radius: 16px;
-      }
-
-      .risk-label {
-        display: inline-flex;
-        align-items: center;
-        width: auto;
-        max-width: 100%;
-        margin-bottom: 10px;
-        padding: 5px 12px;
-        font-size: 12px;
-        line-height: 1.3;
-        white-space: nowrap;
-      }
-
-      .risk-text {
-        font-size: 15px;
-        line-height: 1.85;
-        word-break: normal;
-        overflow-wrap: anywhere;
-      }
-
-      .risk-quote {
-        padding: 16px;
-        font-size: 14px;
-      }
-
-      .adjusted-result-card {
-        padding: 22px;
-      }
-
-      .safety-note {
-        font-size: 12px;
-      }
-
-      .adjust-section {
-        padding: 28px 24px;
-      }
-
-      .adjust-version-group,
-      .adjust-direction-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .choice-grid {
-        grid-template-columns: 1fr;
-      }
-      .generate-button {
-        width: 100%;
-      }
-      .feedback-buttons {
-        flex-direction: column;
-      }
-      .mini-option {
-        width: 100%;
-      }
-      .panel {
-        padding: 24px;
-      }
-    }
-  </style>
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>葵的开口信</title>
+
+<link href="style.css" rel="stylesheet"/></head>
 <body>
-  <div class="page">
-    <section class="hero-section">
-      <div class="hero">
-        <div class="hero-content">
-          <span class="hero-brand">葵的开口信</span>
-          <h1>有些话不是不想说，<br>是怕一发出去就说错。</h1>
-          <p class="hero-subtitle">粘贴你想发的讯息，葵会告诉你哪里可能被误会，并给你 3 个更安全的发送版本。</p>
-          <a href="#concern-section" class="primary-button">检查我的这段话</a>
-        </div>
-        <div class="visual-block">
-          <img src="picture/hero-section-picture.webp" alt="夏日信封与向日葵">
-        </div>
-      </div>
-    </section>
-
-    <main class="main-grid">
-      <section class="section section-center" id="concern-section">
-        <div class="panel">
-          <div class="section-heading">
-            <h2>你最担心这段话哪里不对？</h2>
-            <p>选一个最接近你现在顾虑的地方，葵会先帮你检查发送风险。</p>
-          </div>
-          <div class="choice-grid" data-group="concern">
-            <button class="choice active" data-value="我怕太卑微">太卑微</button>
-            <button class="choice" data-value="我怕太冲">太冲</button>
-            <button class="choice" data-value="我怕对方误会">对方误会</button>
-            <button class="choice" data-value="我怕说太多">说太多</button>
-            <button class="choice" data-value="我怕不够清楚">不够清楚</button>
-            <button class="choice" data-value="我怕关系变尴尬">关系变尴尬</button>
-          </div>
-        </div>
-      </section>
-
-      <section class="section section-center" id="input-section">
-        <div class="panel">
-          <div class="section-heading">
-            <h2>先把你想发的话贴上来</h2>
-            <p>不用写得完美。可以是草稿、想法、气话，葵会先帮你检查哪里可能让人误会。</p>
-          </div>
-          <textarea id="rawInput" maxlength="1200" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
-          <div class="input-meta">
-            <span>建议不要输入身份证、电话、住址等个人隐私信息</span>
-            <span><span id="charCount">0</span>/1200</span>
-          </div>
-          <div class="safety-note">
+<div class="page">
+<section class="hero-section">
+<div class="hero">
+<div class="hero-content">
+<span class="hero-brand">葵的开口信</span>
+<h1>有些话不是不想说，<br/>是怕一发出去就说错。</h1>
+<p class="hero-subtitle">粘贴你想发的讯息，葵会告诉你哪里可能被误会，并给你 3 个更安全的发送版本。</p>
+<a class="primary-button" href="#concern-section">检查我的这段话</a>
+</div>
+<div class="visual-block">
+<img alt="夏日信封与向日葵" src="picture/hero-section-picture.webp"/>
+</div>
+</div>
+</section>
+<main class="main-grid">
+<section class="section section-center" id="concern-section">
+<div class="panel">
+<div class="section-heading">
+<h2>你最担心这段话哪里不对？</h2>
+<p>选一个最接近你现在顾虑的地方，葵会先帮你检查发送风险。</p>
+</div>
+<div class="choice-grid" data-group="concern">
+<button class="choice active" data-value="我怕太卑微">太卑微</button>
+<button class="choice" data-value="我怕太冲">太冲</button>
+<button class="choice" data-value="我怕对方误会">对方误会</button>
+<button class="choice" data-value="我怕说太多">说太多</button>
+<button class="choice" data-value="我怕不够清楚">不够清楚</button>
+<button class="choice" data-value="我怕关系变尴尬">关系变尴尬</button>
+</div>
+</div>
+</section>
+<section class="section section-center" id="input-section">
+<div class="panel">
+<div class="section-heading">
+<h2>先把你想发的话贴上来</h2>
+<p>不用写得完美。可以是草稿、想法、气话，葵会先帮你检查哪里可能让人误会。</p>
+</div>
+<textarea id="rawInput" maxlength="1200" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
+<div class="input-meta">
+<span>建议不要输入身份证、电话、住址等个人隐私信息</span>
+<span><span id="charCount">0</span>/1200</span>
+</div>
+<div class="safety-note">
             如果涉及威胁、骚扰、分手冲突、暴力风险，请先找可信任的人或专业人士，不要只依赖改写工具。
           </div>
-        </div>
-      </section>
+</div>
+</section>
+<section class="section section-center" id="tone-section">
+<div class="panel">
+<div class="section-heading">
+<h2>你希望最后发出去的语气像哪一种？</h2>
+<p>选一个最接近你想要的发送策略。</p>
+</div>
+<div class="choice-grid" data-group="tone">
+<button class="choice active" data-value="温柔但不卑微">温柔但不卑微</button>
+<button class="choice" data-value="真诚但不给压力">真诚但不给压力</button>
+<button class="choice" data-value="像平常聊天一样">像平常聊天一样</button>
+<button class="choice" data-value="保持边界但不冷漠">保持边界但不冷漠</button>
+</div>
+</div>
+<div class="generate-area">
+<button class="generate-button" id="generateBtn">
+<span>让葵检查这段话</span>
+</button>
+<div class="loading" id="loadingBox">
+<span>葵正在帮你检查这段话……</span>
+</div>
+</div>
+</section>
+</main>
+<section class="section results" id="results-section">
+<div aria-label="葵的夏日小镇氛围横幅" class="summer-banner-section">
+<div class="summer-banner-card">
+<img alt="夏日向日葵田、小镇远景与邮筒" src="images/kui-summer-banner.webp"/>
+</div>
+</div>
+<div class="results-header risk-header">
+<h2>葵先帮你看了一下</h2>
+<p>先检查这段话可能让人误会的地方，再整理成可以发送的版本。</p>
+</div>
+<div class="risk-card">
+<h3>发送前检查</h3>
+<div class="risk-quote" id="quoteResult">我会先看你原文里容易被误会的地方。</div>
+<div class="risk-grid">
+<div class="risk-item">
+<span class="risk-label">可能的风险</span>
+<p class="risk-text" id="riskResult">这段话可能会让对方感觉被责怪，或让你的重点被情绪盖过去。</p>
+</div>
+<div class="risk-item">
+<span class="risk-label">建议方向</span>
+<p class="risk-text" id="adviceResult">先说自己的感受，再说明你希望如何沟通，不急着要求对方马上回应。</p>
+</div>
+</div>
+</div>
+<div class="results-header">
+<h2>葵整理了 3 个版本</h2>
+<p>短讯版适合 WhatsApp 直接发；温和版适合降低冲突；边界版适合不想再委屈自己。</p>
+</div>
+<div class="result-card">
+<span class="result-tag">适合 WhatsApp 直接发</span>
+<h3>短讯版</h3>
+<p class="result-text" id="shortResult"></p>
+<button class="copy-button" data-copy="shortResult">复制短讯版</button>
+</div>
+<div class="result-card">
+<span class="result-tag">适合降低冲突</span>
+<h3>温和版</h3>
+<p class="result-text" id="letterResult"></p>
+<button class="copy-button" data-copy="letterResult">复制温和版</button>
+</div>
+<div class="result-card">
+<span class="result-tag">适合不想再委屈自己</span>
+<h3>边界版</h3>
+<p class="result-text" id="calmResult"></p>
+<button class="copy-button" data-copy="calmResult">复制边界版</button>
+</div>
+<div aria-label="二次调整功能占位" class="adjust-section">
+<div class="section-heading">
+<h2>发之前还不放心，可以再调整</h2>
+<p>选择一个版本，让葵再帮你改得更自然、更安全一点。</p>
+</div>
+<div class="adjust-group-title">选择版本</div>
+<div class="adjust-version-group">
+<button class="adjust-option active" data-adjust-version="shortResult" type="button">短讯版</button>
+<button class="adjust-option" data-adjust-version="letterResult" type="button">温和版</button>
+<button class="adjust-option" data-adjust-version="calmResult" type="button">边界版</button>
+</div>
+<div class="adjust-group-title">选择调整方向</div>
+<div class="adjust-direction-grid">
+<button class="adjust-option" data-adjust-direction="natural" type="button">再自然一点</button>
+<button class="adjust-option" data-adjust-direction="shorter" type="button">再短一点</button>
+<button class="adjust-option" data-adjust-direction="less-humble" type="button">不要太卑微</button>
+<button class="adjust-option" data-adjust-direction="less-formal" type="button">不要太正式</button>
+<button class="adjust-option" data-adjust-direction="whatsapp" type="button">更像 WhatsApp</button>
+<button class="adjust-option" data-adjust-direction="boundary" type="button">保留边界感</button>
+</div>
+<div class="adjusted-result-card" id="adjustedResultCard">
+<span class="adjusted-tag" id="adjustedTag">葵重新整理了一版</span>
+<h3>调整后的版本</h3>
+<p class="result-text" id="adjustedResult"></p>
+<button class="copy-button" data-copy="adjustedResult">复制这个版本</button>
+</div>
+</div>
+<div class="light-feedback">
+<p>这封信，可以送出去了吗？</p>
+<div class="feedback-buttons">
+<button class="mini-option" data-feedback="yes">可以，我想送出去</button>
+<button class="mini-option" data-feedback="maybe">还想再改得更像我</button>
+<button class="mini-option" data-feedback="no">还不太像我想说的话</button>
+</div>
+</div>
+</section>
+<footer class="footer">
+<p>葵只帮你检查和整理表达，不替你决定关系。愿每一句要送出去的话，都能被温柔接住。</p>
+</footer>
+</div>
+<div class="toast" id="toast">已复制</div>
 
-      <section class="section section-center" id="tone-section">
-        <div class="panel">
-          <div class="section-heading">
-            <h2>你希望最后发出去的语气像哪一种？</h2>
-            <p>选一个最接近你想要的发送策略。</p>
-          </div>
-          <div class="choice-grid" data-group="tone">
-            <button class="choice active" data-value="温柔但不卑微">温柔但不卑微</button>
-            <button class="choice" data-value="真诚但不给压力">真诚但不给压力</button>
-            <button class="choice" data-value="像平常聊天一样">像平常聊天一样</button>
-            <button class="choice" data-value="保持边界但不冷漠">保持边界但不冷漠</button>
-          </div>
-        </div>
+<button class="back-to-top" type="button" aria-label="返回顶部">
+  <svg class="back-to-top-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+    <path stroke-linecap="round" stroke-linejoin="round" d="m4.5 15.75 7.5-7.5 7.5 7.5" />
+  </svg>
+</button>
 
-        <div class="generate-area">
-          <button class="generate-button" id="generateBtn">
-            <span>让葵检查这段话</span>
-          </button>
-          <div class="loading" id="loadingBox">
-            <span>葵正在帮你检查这段话……</span>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <section class="section results" id="results-section">
-      <div class="summer-banner-section" aria-label="葵的夏日小镇氛围横幅">
-        <div class="summer-banner-card">
-          <img src="images/kui-summer-banner.webp" alt="夏日向日葵田、小镇远景与邮筒">
-        </div>
-      </div>
-
-      <div class="results-header risk-header">
-        <h2>葵先帮你看了一下</h2>
-        <p>先检查这段话可能让人误会的地方，再整理成可以发送的版本。</p>
-      </div>
-
-      <div class="risk-card">
-        <h3>发送前检查</h3>
-        <div class="risk-quote" id="quoteResult">我会先看你原文里容易被误会的地方。</div>
-        <div class="risk-grid">
-          <div class="risk-item">
-            <span class="risk-label">可能的风险</span>
-            <p class="risk-text" id="riskResult">这段话可能会让对方感觉被责怪，或让你的重点被情绪盖过去。</p>
-          </div>
-          <div class="risk-item">
-            <span class="risk-label">建议方向</span>
-            <p class="risk-text" id="adviceResult">先说自己的感受，再说明你希望如何沟通，不急着要求对方马上回应。</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="results-header">
-        <h2>葵整理了 3 个版本</h2>
-        <p>短讯版适合 WhatsApp 直接发；温和版适合降低冲突；边界版适合不想再委屈自己。</p>
-      </div>
-
-      <div class="result-card">
-        <span class="result-tag">适合 WhatsApp 直接发</span>
-        <h3>短讯版</h3>
-        <p class="result-text" id="shortResult"></p>
-        <button class="copy-button" data-copy="shortResult">复制短讯版</button>
-      </div>
-
-      <div class="result-card">
-        <span class="result-tag">适合降低冲突</span>
-        <h3>温和版</h3>
-        <p class="result-text" id="letterResult"></p>
-        <button class="copy-button" data-copy="letterResult">复制温和版</button>
-      </div>
-
-      <div class="result-card">
-        <span class="result-tag">适合不想再委屈自己</span>
-        <h3>边界版</h3>
-        <p class="result-text" id="calmResult"></p>
-        <button class="copy-button" data-copy="calmResult">复制边界版</button>
-      </div>
-
-
-      <div class="adjust-section" aria-label="二次调整功能占位">
-        <div class="section-heading">
-          <h2>发之前还不放心，可以再调整</h2>
-          <p>选择一个版本，让葵再帮你改得更自然、更安全一点。</p>
-        </div>
-
-        <div class="adjust-group-title">选择版本</div>
-        <div class="adjust-version-group">
-          <button class="adjust-option active" type="button" data-adjust-version="shortResult">短讯版</button>
-          <button class="adjust-option" type="button" data-adjust-version="letterResult">温和版</button>
-          <button class="adjust-option" type="button" data-adjust-version="calmResult">边界版</button>
-        </div>
-
-        <div class="adjust-group-title">选择调整方向</div>
-        <div class="adjust-direction-grid">
-          <button class="adjust-option" type="button" data-adjust-direction="natural">再自然一点</button>
-          <button class="adjust-option" type="button" data-adjust-direction="shorter">再短一点</button>
-          <button class="adjust-option" type="button" data-adjust-direction="less-humble">不要太卑微</button>
-          <button class="adjust-option" type="button" data-adjust-direction="less-formal">不要太正式</button>
-          <button class="adjust-option" type="button" data-adjust-direction="whatsapp">更像 WhatsApp</button>
-          <button class="adjust-option" type="button" data-adjust-direction="boundary">保留边界感</button>
-        </div>
-
-        <div class="adjusted-result-card" id="adjustedResultCard">
-          <span class="adjusted-tag" id="adjustedTag">葵重新整理了一版</span>
-          <h3>调整后的版本</h3>
-          <p class="result-text" id="adjustedResult"></p>
-          <button class="copy-button" data-copy="adjustedResult">复制这个版本</button>
-        </div>
-      </div>
-
-      <div class="light-feedback">
-        <p>这封信，可以送出去了吗？</p>
-        <div class="feedback-buttons">
-          <button class="mini-option" data-feedback="yes">可以，我想送出去</button>
-          <button class="mini-option" data-feedback="maybe">还想再改得更像我</button>
-          <button class="mini-option" data-feedback="no">还不太像我想说的话</button>
-        </div>
-      </div>
-    </section>
-
-    <footer class="footer">
-      <p>葵只帮你检查和整理表达，不替你决定关系。愿每一句要送出去的话，都能被温柔接住。</p>
-    </footer>
-  </div>
-
-  <div class="toast" id="toast">已复制</div>
-
-  <script>
-    const state = {
-      concern: "我怕太卑微",
-      tone: "温柔但不卑微",
-      text: ""
-    };
-
-    window.addEventListener('DOMContentLoaded', () => {
-      const rawInput = document.getElementById("rawInput");
-      if (rawInput && rawInput.value) {
-        state.text = rawInput.value.trim();
-        document.getElementById("charCount").textContent = rawInput.value.length;
-      }
-    });
-
-    const rawInput = document.getElementById("rawInput");
-    const charCount = document.getElementById("charCount");
-    const generateBtn = document.getElementById("generateBtn");
-    const loadingBox = document.getElementById("loadingBox");
-    const resultsSection = document.getElementById("results-section");
-    const shortResult = document.getElementById("shortResult");
-    const letterResult = document.getElementById("letterResult");
-    const calmResult = document.getElementById("calmResult");
-    const riskResult = document.getElementById("riskResult");
-    const adviceResult = document.getElementById("adviceResult");
-    const quoteResult = document.getElementById("quoteResult");
-    const adjustedResultCard = document.getElementById("adjustedResultCard");
-    const adjustedTag = document.getElementById("adjustedTag");
-    const adjustedResult = document.getElementById("adjustedResult");
-    const toast = document.getElementById("toast");
-
-    document.querySelectorAll(".choice-grid").forEach(group => {
-      group.addEventListener("click", event => {
-        const button = event.target.closest(".choice");
-        if (!button) return;
-
-        group.querySelectorAll(".choice").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-
-        const type = group.dataset.group;
-        state[type] = button.dataset.value;
-      });
-    });
-
-    rawInput.addEventListener("input", () => {
-      state.text = rawInput.value.trim();
-      charCount.textContent = rawInput.value.length;
-    });
-
-    generateBtn.addEventListener("click", () => {
-      const userText = state.text || "我不是要吵架，只是有些话憋着不说也不舒服。";
-
-      generateBtn.disabled = true;
-      loadingBox.classList.add("show");
-      resultsSection.classList.remove("show");
-
-      document.querySelectorAll(".light-feedback .mini-option").forEach(opt => opt.classList.remove("active"));
-      adjustedResultCard.classList.remove("show");
-
-      setTimeout(() => {
-        const outputs = createMockOutputs(state.concern, state.tone, userText);
-        riskResult.textContent = outputs.risk;
-        adviceResult.textContent = outputs.advice;
-        quoteResult.innerHTML = outputs.quoted;
-        shortResult.textContent = outputs.short;
-        letterResult.textContent = outputs.letter;
-        calmResult.textContent = outputs.calm;
-
-        loadingBox.classList.remove("show");
-        generateBtn.disabled = false;
-        resultsSection.classList.add("show");
-        
-        const yOffset = 0; 
-        const y = resultsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({top: y, behavior: 'smooth'});
-      }, 1200);
-    });
-
-    function extractSignalWords(text) {
-      const riskyWords = [
-        "随便", "算了", "你每次", "你总是", "为什么", "到底",
-        "无所谓", "都是你", "不想理", "对不起", "拜托", "求你",
-        "你根本", "你从来", "受够", "烦死", "懒得说", "随你"
-      ];
-
-      return riskyWords.filter(word => text.includes(word)).slice(0, 3);
-    }
-
-    function createMockOutputs(concern, tone, text) {
-      const userSnippet = text.length > 60 ? text.slice(0, 60) + "..." : text;
-      const signals = extractSignalWords(text);
-      const quoted = signals.length
-        ? `我注意到这段里有几个地方可能需要小心：<strong>${signals.join("、")}</strong>。`
-        : "我没有看到特别刺耳的词，但这段话的表达顺序还可以更清楚。";
-
-      const riskMap = {
-        "我怕太卑微": {
-          risk: "这段话可能把重心放在讨好或反复解释上，让你显得太委屈，也容易让对方忽略你真正想表达的重点。",
-          advice: "保留真诚，但减少过度道歉。先说清楚你的感受和边界，再给对方回应空间。"
-        },
-        "我怕太冲": {
-          risk: "这段话可能会让对方感觉被指责，容易把沟通变成争辩。",
-          advice: "先用“我感受到……”表达自己的状态，再说明具体事件，避免直接给对方下判断。"
-        },
-        "我怕对方误会": {
-          risk: "这段话的重点可能不够清楚，对方可能只看到情绪，而没有理解你的真正意思。",
-          advice: "先讲目的，再讲感受，最后补一句你不是要吵架，而是想把话说清楚。"
-        },
-        "我怕说太多": {
-          risk: "这段话如果太长，可能会让对方有压力，也可能让你的重点被淹没。",
-          advice: "把内容压缩成三部分：发生了什么、你的感受、你希望接下来怎样。"
-        },
-        "我怕不够清楚": {
-          risk: "这段话可能表达了情绪，但没有明确说出你真正想要对方理解的重点。",
-          advice: "直接点出核心信息，减少绕圈，让对方知道你是在解释、表达感受，还是提出边界。"
-        },
-        "我怕关系变尴尬": {
-          risk: "这段话如果太沉重，可能让聊天气氛变僵，也可能让对方不知道怎么回应。",
-          advice: "语气保持轻一点，给对方台阶，也给自己留空间，不把一次对话变成最终判决。"
-        }
-      };
-
-
-      const check = riskMap[concern] || riskMap["我怕太卑微"];
-
-      const toneStyle = {
-        "温柔但不卑微": {
-          opening: "我想了想，还是想把这件事说清楚。",
-          close: "你不用马上回应，我只是希望这件事不要一直卡在我们之间。"
-        },
-        "真诚但不给压力": {
-          opening: "我想认真说一下我的想法。",
-          close: "你可以慢慢看，不用急着回复。"
-        },
-        "像平常聊天一样": {
-          opening: "我想跟你说一下刚才那件事。",
-          close: "我不是想吵架，只是想讲清楚一点。"
-        },
-        "保持边界但不冷漠": {
-          opening: "我想简单说明一下我的感受和边界。",
-          close: "我尊重你的想法，也希望我的感受能被理解。"
-        }
-      }[tone] || {
-        opening: "我想把这件事说清楚。",
-        close: "你不用马上回应，我只是希望我们不要误会彼此。"
-      };
-
-      return {
-        risk: check.risk,
-        advice: check.advice,
-        quoted,
-        short: `${toneStyle.opening}
-
-关于刚才那段话，我其实有点在意。我不是想责怪你，只是想让你知道我的感受。
-
-${toneStyle.close}`,
-        letter: `${toneStyle.opening}
-
-我看了自己原本想发的内容：
-“${userSnippet}”
-
-我真正想表达的是：这件事让我有点不舒服，但我不希望我们把它变成争吵。我希望可以把话说清楚，而不是彼此猜来猜去。
-
-${toneStyle.close}`,
-        calm: `我想把这件事说清楚，但不想把语气说重。
-
-我的重点不是要追究谁对谁错，而是希望你知道这件事对我有影响。之后如果可以，我希望我们都能用更舒服的方式沟通。
-
-${toneStyle.close}`
-      };
-    }
-
-    document.querySelectorAll(".copy-button").forEach(button => {
-      button.addEventListener("click", async () => {
-        const targetId = button.dataset.copy;
-        const text = document.getElementById(targetId).textContent;
-        try {
-          await navigator.clipboard.writeText(text);
-          showToast("已复制到剪贴板");
-        } catch (error) {
-          showToast("复制失败，请手动选择");
-        }
-      });
-    });
-
-    document.querySelectorAll(".adjust-version-group .adjust-option").forEach(button => {
-      button.addEventListener("click", () => {
-        const group = button.closest(".adjust-version-group");
-        group.querySelectorAll(".adjust-option").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-      });
-    });
-
-    function getSelectedAdjustText() {
-      const selectedVersion = document.querySelector(".adjust-version-group .adjust-option.active");
-      const targetId = selectedVersion ? selectedVersion.dataset.adjustVersion : "shortResult";
-      const source = document.getElementById(targetId);
-      return source ? source.textContent.trim() : "";
-    }
-
-    function rewriteAdjustText(text, direction) {
-      const compact = text.replace(/\n{2,}/g, "\n").trim();
-      const directionMap = {
-        natural: {
-          label: "已帮你改得更自然一点",
-          prefix: "我想自然一点说："
-        },
-        shorter: {
-          label: "已帮你改得更短一点",
-          prefix: "简单说就是："
-        },
-        "less-humble": {
-          label: "已帮你减少卑微感",
-          prefix: "我想真诚一点说，但也保留自己的边界："
-        },
-        "less-formal": {
-          label: "已帮你改得不那么正式",
-          prefix: "换成比较像聊天的说法："
-        },
-        whatsapp: {
-          label: "已帮你改得更像 WhatsApp",
-          prefix: "可以这样发："
-        },
-        boundary: {
-          label: "已帮你加强边界感",
-          prefix: "我想把话说清楚，也保留一点边界："
-        }
-      };
-      const setting = directionMap[direction] || directionMap.natural;
-      const shorterText = compact.length > 180 ? compact.slice(0, 180) + "……" : compact;
-      return {
-        label: setting.label,
-        text: `${setting.prefix}
-
-${shorterText}`
-      };
-    }
-
-    document.querySelectorAll(".adjust-direction-grid .adjust-option").forEach(button => {
-      button.addEventListener("click", () => {
-        const group = button.closest(".adjust-direction-grid");
-        group.querySelectorAll(".adjust-option").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-
-        const sourceText = getSelectedAdjustText();
-        if (!sourceText) {
-          showToast("先生成版本，再进行调整");
-          return;
-        }
-
-        const result = rewriteAdjustText(sourceText, button.dataset.adjustDirection);
-        adjustedTag.textContent = result.label;
-        adjustedResult.textContent = result.text;
-        adjustedResultCard.classList.add("show");
-        showToast(result.label);
-      });
-    });
-
-    document.querySelectorAll(".light-feedback .mini-option").forEach(button => {
-      button.addEventListener("click", () => {
-        const group = button.closest(".feedback-buttons");
-        group.querySelectorAll(".mini-option").forEach(item => item.classList.remove("active"));
-        button.classList.add("active");
-        showToast("感谢你的反馈！");
-      });
-    });
-
-    function showToast(message) {
-      toast.textContent = message;
-      toast.classList.add("show");
-      setTimeout(() => toast.classList.remove("show"), 2000);
-    }
-  </script>
-</body>
+<script src="script.js"></script></body>
 </html>

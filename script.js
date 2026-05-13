@@ -46,7 +46,7 @@ const state = {
       charCount.textContent = rawInput.value.length;
     });
 
-    generateBtn.addEventListener("click", () => {
+    generateBtn.addEventListener("click", async () => {
       const userText = state.text || "我不是要吵架，只是有些话憋着不说也不舒服。";
 
       generateBtn.disabled = true;
@@ -56,23 +56,42 @@ const state = {
       document.querySelectorAll(".light-feedback .mini-option").forEach(opt => opt.classList.remove("active"));
       adjustedResultCard.classList.remove("show");
 
-      setTimeout(() => {
-        const outputs = createMockOutputs(state.concern, state.tone, userText);
-        riskResult.textContent = outputs.risk;
-        adviceResult.textContent = outputs.advice;
-        quoteResult.innerHTML = outputs.quoted;
-        shortResult.textContent = outputs.short;
-        letterResult.textContent = outputs.letter;
-        calmResult.textContent = outputs.calm;
+      try {
+        const response = await fetch("/api/generate", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            text: userText,
+            concern: state.concern,
+            tone: state.tone
+          })
+        });
 
+        const outputs = await response.json();
+        if (!response.ok) {
+          throw new Error(outputs.error || "生成失败");
+        }
+
+        riskResult.textContent = outputs.risk || "暂时无法判断风险。";
+        adviceResult.textContent = outputs.advice || "建议把重点说清楚，并保留自己的边界。";
+        quoteResult.innerHTML = outputs.quoted || "葵已经帮你检查了原文里可能被误会的地方。";
+        shortResult.textContent = outputs.short || "";
+        letterResult.textContent = outputs.letter || "";
+        calmResult.textContent = outputs.calm || "";
+
+        resultsSection.classList.add("show");
+        const yOffset = 0;
+        const y = resultsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      } catch (error) {
+        console.error(error);
+        showToast(error.message || "生成失败，请检查 API 设置");
+      } finally {
         loadingBox.classList.remove("show");
         generateBtn.disabled = false;
-        resultsSection.classList.add("show");
-        
-        const yOffset = 0; 
-        const y = resultsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({top: y, behavior: 'smooth'});
-      }, 1200);
+      }
     });
 
     function extractSignalWords(text) {
@@ -247,11 +266,36 @@ ${shorterText}`
           return;
         }
 
-        const result = rewriteAdjustText(sourceText, button.dataset.adjustDirection);
-        adjustedTag.textContent = result.label;
-        adjustedResult.textContent = result.text;
-        adjustedResultCard.classList.add("show");
-        showToast(result.label);
+        button.disabled = true;
+        showToast("葵正在重新调整……");
+
+        fetch("/api/adjust", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            text: sourceText,
+            direction: button.dataset.adjustDirection
+          })
+        })
+          .then(async response => {
+            const result = await response.json();
+            if (!response.ok) {
+              throw new Error(result.error || "调整失败");
+            }
+            adjustedTag.textContent = result.label || "葵重新整理了一版";
+            adjustedResult.textContent = result.text || "";
+            adjustedResultCard.classList.add("show");
+            showToast(result.label || "已完成调整");
+          })
+          .catch(error => {
+            console.error(error);
+            showToast(error.message || "调整失败，请检查 API 设置");
+          })
+          .finally(() => {
+            button.disabled = false;
+          });
       });
     });
 

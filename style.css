@@ -53,18 +53,18 @@
       padding: 0 24px; /* 移除顶部 padding，由 section 处理 */
     }
 
-    /* Section Wrapper for "One Chapter per Page" feel */
+    /* Section Wrapper: keep a breathable flow without making each card feel like a separate page */
     .section {
-      min-height: 95vh; /* 留出一点点空间作为向下滚动的暗示 */
+      min-height: auto;
       display: flex;
       flex-direction: column;
-      padding: 60px 0;
-      scroll-margin-top: 0;
+      padding: 36px 0;
+      scroll-margin-top: 24px;
     }
 
     /* Used for sections that need content vertically centered */
     .section-center {
-      justify-content: center;
+      justify-content: flex-start;
     }
 
     /* Hero Section as a standalone entry */
@@ -197,6 +197,50 @@
       color: var(--muted);
     }
 
+    .step-kicker {
+      display: inline-flex;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(220, 236, 242, 0.55);
+      color: #4A7C8C;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .next-step-row {
+      display: flex;
+      justify-content: flex-end;
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(234, 223, 207, 0.75);
+    }
+
+    .next-step-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.45);
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.4;
+      transition: all 0.2s ease;
+    }
+
+    .next-step-link:hover {
+      color: var(--accent);
+      border-color: rgba(184, 92, 74, 0.35);
+      background: #FFFDF8;
+      transform: translateY(-1px);
+    }
+
     /* Choice Grid Base (Mobile First) */
     .choice-grid {
       display: grid;
@@ -287,7 +331,7 @@
     }
 
     .generate-area {
-      padding: 80px 0;
+      padding: 28px 0 44px;
       text-align: center; /* 默认居中，确保手机端也美观 */
     }
 
@@ -703,12 +747,7 @@
     @media (max-width: 900px) {
       .section {
         min-height: auto;
-        padding: 40px 0;
-      }
-      .section:first-of-type {
-        min-height: 95vh;
-        display: flex;
-        flex-direction: column;
+        padding: 30px 0;
       }
       .hero {
         grid-template-columns: 1fr;
@@ -818,6 +857,14 @@
       }
       .panel {
         padding: 24px;
+      }
+      .next-step-row {
+        justify-content: stretch;
+        margin-top: 22px;
+        padding-top: 18px;
+      }
+      .next-step-link {
+        width: 100%;
       }
     }
 

@@ -432,54 +432,8 @@
     }
 
     .results-header {
-      margin-bottom: 40px;
-      text-align: center;
-    }
-
-    .risk-card {
-      background: linear-gradient(135deg, #FFFDF8, #FFF8EC);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 36px 40px;
       margin-bottom: 32px;
-    }
-
-    .risk-card h3 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: var(--ink);
-    }
-
-    .risk-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-    }
-
-    .risk-item {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 20px;
-    }
-
-    .risk-label {
-      display: inline-block;
-      margin-bottom: 8px;
-      font-size: 12px;
-      font-weight: 800;
-      color: #4A7C8C;
-      background: var(--sky);
-      border-radius: 999px;
-      padding: 4px 10px;
-    }
-
-    .risk-text {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.8;
-      color: var(--ink);
+      text-align: center;
     }
 
 
@@ -513,31 +467,136 @@
       gap: 8px;
     }
 
-    .result-card h3::after {
-      content: "";
-      flex: 1;
-      height: 1px;
-      background: var(--line);
+    /* Recommended Version */
+    .recommendation-card {
+      background: #FFFDF8;
+      border: 2px solid var(--accent);
+      border-radius: 28px;
+      padding: 40px;
+      margin-bottom: 24px;
+      box-shadow: 0 15px 35px rgba(120, 82, 45, 0.08);
+      position: relative;
+      animation: fadeInUp 0.5s ease forwards;
     }
 
-    .result-text {
-      font-size: 16px;
-      line-height: 1.9;
+    .recommendation-card .result-tag {
+      background: var(--accent);
+      color: #fff;
+      font-size: 13px;
+      padding: 6px 16px;
+      margin-bottom: 20px;
+    }
+
+    .recommendation-card .result-text {
+      font-size: 18px;
+      font-weight: 500;
       color: var(--ink);
-      white-space: pre-line;
+    }
+
+    .recommendation-card .copy-button {
+      background: var(--accent);
+      color: #fff;
+      border: none;
+      width: 100%;
+      padding: 16px;
+      font-size: 16px;
+    }
+
+    .recommendation-card .copy-button:hover {
+      background: #5A4431;
+    }
+
+    /* Why this is stable */
+    .stability-note {
+      background: #F8F9FA;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 24px;
       margin-bottom: 32px;
     }
 
-    .copy-button {
-      background: #F8F4EF;
-      border: 1px solid var(--line);
-      padding: 12px 28px;
+    .stability-note h3 {
+      font-size: 15px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stability-text {
       font-size: 14px;
-      font-weight: 800;
-      color: var(--ink);
-      border-radius: 12px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Other Versions */
+    .other-versions-toggle {
+      text-align: center;
+      margin: 32px 0;
+    }
+
+    .toggle-link {
+      background: none;
+      border: none;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
       cursor: pointer;
-      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px 16px;
+      border-radius: 999px;
+      transition: all 0.2s;
+    }
+
+    .toggle-link:hover {
+      background: #F0F0F0;
+      color: var(--ink);
+    }
+
+    .other-versions-container {
+      display: none;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .other-versions-container.show {
+      display: block;
+    }
+
+    .other-versions-container .result-card {
+      background: #fff;
+      border-color: var(--line);
+      box-shadow: none;
+      margin-bottom: 16px;
+      padding: 24px;
+    }
+
+    .other-versions-container .result-card .result-tag {
+      background: #F0F0F0;
+      color: var(--muted);
+    }
+
+    .other-versions-container .result-card h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+
+    .other-versions-container .result-card .result-text {
+      font-size: 15px;
+      margin-bottom: 20px;
+    }
+
+    .other-versions-container .result-card .copy-button {
+      padding: 8px 20px;
+      font-size: 13px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .copy-button:hover {
@@ -547,45 +606,31 @@
 
 
 
-    /* Secondary Adjustment Placeholder */
+    /* Secondary Adjustment */
     .adjust-section {
-      background: var(--paper);
+      background: #fff;
       border: 1px solid var(--line);
       border-radius: 24px;
-      box-shadow: var(--shadow);
-      padding: 36px 40px;
+      padding: 32px;
       margin-bottom: 32px;
     }
 
-    .adjust-section .section-heading {
-      margin-bottom: 24px;
-    }
-
-    .adjust-section .section-heading h2 {
-      font-size: 22px;
+    .adjust-section .section-heading h3 {
+      font-size: 16px;
       margin-bottom: 8px;
       color: var(--ink);
     }
 
     .adjust-section .section-heading p {
-      margin: 0;
-      font-size: 15px;
+      font-size: 13px;
       color: var(--muted);
     }
 
-    .adjust-group-title {
-      margin: 24px 0 12px;
-      font-size: 14px;
-      color: var(--muted);
-      font-weight: 800;
-      letter-spacing: 0.02em;
-    }
-
-    .adjust-version-group,
     .adjust-direction-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
+      margin-top: 20px;
     }
 
     .adjust-option {

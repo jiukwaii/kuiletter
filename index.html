@@ -22,8 +22,8 @@
 <div class="hero-content">
 <span class="hero-brand">葵的开口信</span>
 <h1>有些话不是不想说，<br/>是怕一发出去就说错。</h1>
-<p class="hero-subtitle">粘贴你想发的讯息，葵会告诉你哪里可能被误会，并给你 3 个更安全的发送版本。</p>
-<a class="primary-button" href="#concern-section">检查我的这段话</a>
+<p class="hero-subtitle">把你想发但一直删掉的私讯贴上来，葵会帮你整理成不太冲、不卑微、可以真的发出去的版本。</p>
+<a class="primary-button" href="#concern-section">让葵整理成可以发的版本</a>
 </div>
 <div class="visual-block">
 <img alt="夏日信封与向日葵" src="picture/hero-section-picture.webp"/>
@@ -42,8 +42,6 @@
 <button class="choice active" data-value="我怕太卑微">太卑微</button>
 <button class="choice" data-value="我怕太冲">太冲</button>
 <button class="choice" data-value="我怕对方误会">对方误会</button>
-<button class="choice" data-value="我怕说太多">说太多</button>
-<button class="choice" data-value="我怕不够清楚">不够清楚</button>
 <button class="choice" data-value="我怕关系变尴尬">关系变尴尬</button>
 </div>
 <div class="next-step-row">
@@ -56,7 +54,7 @@
 <div class="section-heading">
 <span class="step-kicker">步骤 2 / 3</span>
 <h2>先把你想发的话贴上来</h2>
-<p>不用写得完美。可以是草稿、想法、气话，葵会先帮你看哪里可能让人误会。</p>
+<p>不用写得完美。建议贴最想整理的重点段落，不用贴完整聊天记录。</p>
 </div>
 <textarea id="rawInput" maxlength="1200" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
 <div class="input-meta">
@@ -87,10 +85,10 @@
 </div>
 <div class="generate-area">
 <button class="generate-button" id="generateBtn">
-<span>让葵检查这段话</span>
+<span>让葵整理成可以发的版本</span>
 </button>
 <div class="loading" id="loadingBox">
-<span>葵正在帮你检查这段话……</span>
+<span>葵正在帮你整理私讯……</span>
 </div>
 </div>
 </section>
@@ -101,73 +99,73 @@
 <img alt="夏日向日葵田、小镇远景与邮筒" src="images/kui-summer-banner.webp"/>
 </div>
 </div>
-<div class="results-header risk-header">
-<h2>葵先帮你看了一下</h2>
-<p>先检查这段话可能让人误会的地方，再整理成可以发送的版本。</p>
-</div>
-<div class="risk-card">
-<h3>发送前检查</h3>
-<div class="risk-quote" id="quoteResult">我会先看你原文里容易被误会的地方。</div>
-<div class="risk-grid">
-<div class="risk-item">
-<span class="risk-label">可能的风险</span>
-<p class="risk-text" id="riskResult">这段话可能会让对方感觉被责怪，或让你的重点被情绪盖过去。</p>
-</div>
-<div class="risk-item">
-<span class="risk-label">建议方向</span>
-<p class="risk-text" id="adviceResult">先说自己的感受，再说明你希望如何沟通，不急着要求对方马上回应。</p>
-</div>
-</div>
-</div>
+
 <div class="results-header">
-<h2>葵整理了 3 个版本</h2>
-<p>短讯版适合 WhatsApp 直接发；温和版适合降低冲突；边界版适合不想再委屈自己。</p>
+<h2>葵帮你整理好了</h2>
+<p>这是根据你的顾虑，最推荐的一版私讯。</p>
 </div>
-<div class="result-card">
-<span class="result-tag">适合 WhatsApp 直接发</span>
-<h3>短讯版</h3>
-<p class="result-text" id="shortResult"></p>
-<button class="copy-button" data-copy="shortResult">复制短讯版</button>
+
+<!-- Main Recommendation -->
+<div class="recommendation-card">
+<span class="result-tag" id="recommendationTag">最推荐发这一版</span>
+<p class="result-text" id="recommendationResult"></p>
+<button class="copy-button" id="copyRecommendation">复制这版</button>
 </div>
-<div class="result-card">
-<span class="result-tag">适合降低冲突</span>
-<h3>温和版</h3>
-<p class="result-text" id="letterResult"></p>
-<button class="copy-button" data-copy="letterResult">复制温和版</button>
+
+<!-- Why this is stable -->
+<div class="stability-note">
+<h3>为什么这样比较稳</h3>
+<p class="stability-text" id="stabilityText"></p>
 </div>
-<div class="result-card">
-<span class="result-tag">适合不想再委屈自己</span>
-<h3>边界版</h3>
-<p class="result-text" id="calmResult"></p>
-<button class="copy-button" data-copy="calmResult">复制边界版</button>
-</div>
-<div aria-label="二次调整功能占位" class="adjust-section">
+
+<!-- Quick Adjustments -->
+<div aria-label="二次调整" class="adjust-section">
 <div class="section-heading">
-<h2>发之前还不放心，可以再调整</h2>
-<p>选择一个版本，让葵再帮你改得更自然、更安全一点。</p>
+<h3>这版还不太像你？</h3>
+<p>选一个方向，让葵再帮你微调一下。</p>
 </div>
-<div class="adjust-group-title">选择版本</div>
-<div class="adjust-version-group">
-<button class="adjust-option active" data-adjust-version="shortResult" type="button">短讯版</button>
-<button class="adjust-option" data-adjust-version="letterResult" type="button">温和版</button>
-<button class="adjust-option" data-adjust-version="calmResult" type="button">边界版</button>
-</div>
-<div class="adjust-group-title">选择调整方向</div>
 <div class="adjust-direction-grid">
 <button class="adjust-option" data-adjust-direction="natural" type="button">再自然一点</button>
 <button class="adjust-option" data-adjust-direction="shorter" type="button">再短一点</button>
-<button class="adjust-option" data-adjust-direction="less-humble" type="button">不要太卑微</button>
-<button class="adjust-option" data-adjust-direction="less-formal" type="button">不要太正式</button>
-<button class="adjust-option" data-adjust-direction="whatsapp" type="button">更像 WhatsApp</button>
-<button class="adjust-option" data-adjust-direction="boundary" type="button">保留边界感</button>
+<button class="adjust-option" data-adjust-direction="less-humble" type="button">不要太客气</button>
 </div>
 <div class="adjusted-result-card" id="adjustedResultCard">
 <span class="adjusted-tag" id="adjustedTag">葵重新整理了一版</span>
-<h3>调整后的版本</h3>
 <p class="result-text" id="adjustedResult"></p>
 <button class="copy-button" data-copy="adjustedResult">复制这个版本</button>
 </div>
 </div>
+
+<!-- Other Versions Toggle -->
+<div class="other-versions-toggle">
+<button class="toggle-link" id="toggleOtherVersions" type="button">
+<span>看其他说法</span>
+<svg height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+</button>
+</div>
+
+<!-- Other Versions Container -->
+<div class="other-versions-container" id="otherVersionsContainer">
+<div class="result-card">
+<span class="result-tag">短版</span>
+<h3>更直接一点</h3>
+<p class="result-text" id="shortResult"></p>
+<button class="copy-button" data-copy="shortResult">复制短版</button>
+</div>
+<div class="result-card">
+<span class="result-tag">温和版</span>
+<h3>更婉转一点</h3>
+<p class="result-text" id="letterResult"></p>
+<button class="copy-button" data-copy="letterResult">复制温和版</button>
+</div>
+<div class="result-card">
+<span class="result-tag">有边界版</span>
+<h3>更有立场一点</h3>
+<p class="result-text" id="calmResult"></p>
+<button class="copy-button" data-copy="calmResult">复制有边界版</button>
+</div>
+</div>
+
 <div class="light-feedback">
 <p>这封信，可以送出去了吗？</p>
 <div class="feedback-buttons">

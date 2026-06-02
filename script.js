@@ -17,16 +17,37 @@ const state = {
     const generateBtn = document.getElementById("generateBtn");
     const loadingBox = document.getElementById("loadingBox");
     const resultsSection = document.getElementById("results-section");
+    const recommendationResult = document.getElementById("recommendationResult");
+    const stabilityText = document.getElementById("stabilityText");
     const shortResult = document.getElementById("shortResult");
     const letterResult = document.getElementById("letterResult");
     const calmResult = document.getElementById("calmResult");
-    const riskResult = document.getElementById("riskResult");
-    const adviceResult = document.getElementById("adviceResult");
-    const quoteResult = document.getElementById("quoteResult");
     const adjustedResultCard = document.getElementById("adjustedResultCard");
     const adjustedTag = document.getElementById("adjustedTag");
     const adjustedResult = document.getElementById("adjustedResult");
+    const otherVersionsContainer = document.getElementById("otherVersionsContainer");
+    const toggleOtherVersions = document.getElementById("toggleOtherVersions");
+    const copyRecommendation = document.getElementById("copyRecommendation");
     const toast = document.getElementById("toast");
+
+    // Toggle other versions
+    toggleOtherVersions.addEventListener("click", () => {
+      otherVersionsContainer.classList.toggle("show");
+      const isShowing = otherVersionsContainer.classList.contains("show");
+      toggleOtherVersions.querySelector("span").textContent = isShowing ? "收起其他说法" : "看其他说法";
+      toggleOtherVersions.querySelector("svg").style.transform = isShowing ? "rotate(180deg)" : "rotate(0deg)";
+    });
+
+    // Main copy recommendation
+    copyRecommendation.addEventListener("click", async () => {
+      const text = recommendationResult.textContent;
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("已复制最推荐版本");
+      } catch (error) {
+        showToast("复制失败，请手动选择");
+      }
+    });
 
     document.querySelectorAll(".choice-grid").forEach(group => {
       group.addEventListener("click", event => {
@@ -47,11 +68,18 @@ const state = {
     });
 
     generateBtn.addEventListener("click", async () => {
-      const userText = state.text || "我不是要吵架，只是有些话憋着不说也不舒服。";
+      const userText = state.text.trim();
+      if (!userText) {
+        showToast("请先贴上你想整理的内容。");
+        return;
+      }
 
       generateBtn.disabled = true;
       loadingBox.classList.add("show");
       resultsSection.classList.remove("show");
+      otherVersionsContainer.classList.remove("show");
+      toggleOtherVersions.querySelector("span").textContent = "看其他说法";
+      toggleOtherVersions.querySelector("svg").style.transform = "rotate(0deg)";
 
       document.querySelectorAll(".light-feedback .mini-option").forEach(opt => opt.classList.remove("active"));
       adjustedResultCard.classList.remove("show");
@@ -71,122 +99,49 @@ const state = {
 
         const outputs = await response.json();
         if (!response.ok) {
-          throw new Error(outputs.error || "生成失败");
+          throw new Error(outputs.error || "葵刚刚没有整理成功，请稍后再试。");
         }
 
-        riskResult.textContent = outputs.risk || "暂时无法判断风险。";
-        adviceResult.textContent = outputs.advice || "建议把重点说清楚，并保留自己的边界。";
-        quoteResult.innerHTML = outputs.quoted || "葵已经帮你检查了原文里可能被误会的地方。";
-        shortResult.textContent = outputs.short || "";
-        letterResult.textContent = outputs.letter || "";
-        calmResult.textContent = outputs.calm || "";
+        // Fill data
+        shortResult.textContent = outputs.shortResult || "";
+        letterResult.textContent = outputs.letterResult || "";
+        calmResult.textContent = outputs.calmResult || "";
+
+        // Recommended Version Logic
+        let recommendedText = "";
+        let recommendedTag = "";
+        if (state.concern === "我怕太卑微") {
+          recommendedText = outputs.calmResult;
+          recommendedTag = "有边界版：最适合不想委屈自己";
+        } else if (state.concern === "我怕太冲" || state.concern === "我怕对方误会") {
+          recommendedText = outputs.letterResult;
+          recommendedTag = "温和版：最适合降低冲突";
+        } else {
+          recommendedText = outputs.shortResult;
+          recommendedTag = "短版：最适合直接私讯发";
+        }
+
+        recommendationResult.textContent = recommendedText;
+        document.getElementById("recommendationTag").textContent = recommendedTag;
+
+        // Stability Text Logic
+        const stabilityLines = [];
+        if (outputs.riskResult) stabilityLines.push(outputs.riskResult);
+        if (outputs.adviceResult) stabilityLines.push(outputs.adviceResult);
+        stabilityText.textContent = stabilityLines.join(" ");
 
         resultsSection.classList.add("show");
         const yOffset = 0;
         const y = resultsSection.getBoundingClientRect().top + window.pageYOffset + yOffset;
         window.scrollTo({ top: y, behavior: "smooth" });
       } catch (error) {
-        console.error(error);
-        showToast(error.message || "生成失败，请检查 API 设置");
+        console.error('Frontend Error:', error);
+        showToast(error.message || "连接失败，请检查网络或稍后再试。");
       } finally {
         loadingBox.classList.remove("show");
         generateBtn.disabled = false;
       }
     });
-
-    function extractSignalWords(text) {
-      const riskyWords = [
-        "随便", "算了", "你每次", "你总是", "为什么", "到底",
-        "无所谓", "都是你", "不想理", "对不起", "拜托", "求你",
-        "你根本", "你从来", "受够", "烦死", "懒得说", "随你"
-      ];
-
-      return riskyWords.filter(word => text.includes(word)).slice(0, 3);
-    }
-
-    function createMockOutputs(concern, tone, text) {
-      const userSnippet = text.length > 60 ? text.slice(0, 60) + "..." : text;
-      const signals = extractSignalWords(text);
-      const quoted = signals.length
-        ? `我注意到这段里有几个地方可能需要小心：<strong>${signals.join("、")}</strong>。`
-        : "我没有看到特别刺耳的词，但这段话的表达顺序还可以更清楚。";
-
-      const riskMap = {
-        "我怕太卑微": {
-          risk: "这段话可能把重心放在讨好或反复解释上，让你显得太委屈，也容易让对方忽略你真正想表达的重点。",
-          advice: "保留真诚，但减少过度道歉。先说清楚你的感受和边界，再给对方回应空间。"
-        },
-        "我怕太冲": {
-          risk: "这段话可能会让对方感觉被指责，容易把沟通变成争辩。",
-          advice: "先用“我感受到……”表达自己的状态，再说明具体事件，避免直接给对方下判断。"
-        },
-        "我怕对方误会": {
-          risk: "这段话的重点可能不够清楚，对方可能只看到情绪，而没有理解你的真正意思。",
-          advice: "先讲目的，再讲感受，最后补一句你不是要吵架，而是想把话说清楚。"
-        },
-        "我怕说太多": {
-          risk: "这段话如果太长，可能会让对方有压力，也可能让你的重点被淹没。",
-          advice: "把内容压缩成三部分：发生了什么、你的感受、你希望接下来怎样。"
-        },
-        "我怕不够清楚": {
-          risk: "这段话可能表达了情绪，但没有明确说出你真正想要对方理解的重点。",
-          advice: "直接点出核心信息，减少绕圈，让对方知道你是在解释、表达感受，还是提出边界。"
-        },
-        "我怕关系变尴尬": {
-          risk: "这段话如果太沉重，可能让聊天气氛变僵，也可能让对方不知道怎么回应。",
-          advice: "语气保持轻一点，给对方台阶，也给自己留空间，不把一次对话变成最终判决。"
-        }
-      };
-
-
-      const check = riskMap[concern] || riskMap["我怕太卑微"];
-
-      const toneStyle = {
-        "温柔但不卑微": {
-          opening: "我想了想，还是想把这件事说清楚。",
-          close: "你不用马上回应，我只是希望这件事不要一直卡在我们之间。"
-        },
-        "真诚但不给压力": {
-          opening: "我想认真说一下我的想法。",
-          close: "你可以慢慢看，不用急着回复。"
-        },
-        "像平常聊天一样": {
-          opening: "我想跟你说一下刚才那件事。",
-          close: "我不是想吵架，只是想讲清楚一点。"
-        },
-        "保持边界但不冷漠": {
-          opening: "我想简单说明一下我的感受和边界。",
-          close: "我尊重你的想法，也希望我的感受能被理解。"
-        }
-      }[tone] || {
-        opening: "我想把这件事说清楚。",
-        close: "你不用马上回应，我只是希望我们不要误会彼此。"
-      };
-
-      return {
-        risk: check.risk,
-        advice: check.advice,
-        quoted,
-        short: `${toneStyle.opening}
-
-关于刚才那段话，我其实有点在意。我不是想责怪你，只是想让你知道我的感受。
-
-${toneStyle.close}`,
-        letter: `${toneStyle.opening}
-
-我看了自己原本想发的内容：
-“${userSnippet}”
-
-我真正想表达的是：这件事让我有点不舒服，但我不希望我们把它变成争吵。我希望可以把话说清楚，而不是彼此猜来猜去。
-
-${toneStyle.close}`,
-        calm: `我想把这件事说清楚，但不想把语气说重。
-
-我的重点不是要追究谁对谁错，而是希望你知道这件事对我有影响。之后如果可以，我希望我们都能用更舒服的方式沟通。
-
-${toneStyle.close}`
-      };
-    }
 
     document.querySelectorAll(".copy-button").forEach(button => {
       button.addEventListener("click", async () => {
@@ -210,48 +165,10 @@ ${toneStyle.close}`
     });
 
     function getSelectedAdjustText() {
-      const selectedVersion = document.querySelector(".adjust-version-group .adjust-option.active");
-      const targetId = selectedVersion ? selectedVersion.dataset.adjustVersion : "shortResult";
-      const source = document.getElementById(targetId);
-      return source ? source.textContent.trim() : "";
-    }
-
-    function rewriteAdjustText(text, direction) {
-      const compact = text.replace(/\n{2,}/g, "\n").trim();
-      const directionMap = {
-        natural: {
-          label: "已帮你改得更自然一点",
-          prefix: "我想自然一点说："
-        },
-        shorter: {
-          label: "已帮你改得更短一点",
-          prefix: "简单说就是："
-        },
-        "less-humble": {
-          label: "已帮你减少卑微感",
-          prefix: "我想真诚一点说，但也保留自己的边界："
-        },
-        "less-formal": {
-          label: "已帮你改得不那么正式",
-          prefix: "换成比较像聊天的说法："
-        },
-        whatsapp: {
-          label: "已帮你改得更像 WhatsApp",
-          prefix: "可以这样发："
-        },
-        boundary: {
-          label: "已帮你加强边界感",
-          prefix: "我想把话说清楚，也保留一点边界："
-        }
-      };
-      const setting = directionMap[direction] || directionMap.natural;
-      const shorterText = compact.length > 180 ? compact.slice(0, 180) + "……" : compact;
-      return {
-        label: setting.label,
-        text: `${setting.prefix}
-
-${shorterText}`
-      };
+      // Since we removed the version selection buttons, we default to the recommendationResult
+      // unless the user has already adjusted once, then we might want to adjust the adjusted result?
+      // For simplicity and following the new IA, we adjust the main recommended version.
+      return recommendationResult.textContent.trim();
     }
 
     document.querySelectorAll(".adjust-direction-grid .adjust-option").forEach(button => {

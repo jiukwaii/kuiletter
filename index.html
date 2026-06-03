@@ -56,10 +56,10 @@
 <h2>先把你想发的话贴上来</h2>
 <p>不用写得完美。建议贴最想整理的重点段落，不用贴完整聊天记录。</p>
 </div>
-<textarea id="rawInput" maxlength="1200" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
+<textarea id="rawInput" maxlength="500" placeholder="例如：我不是要吵架，只是你刚刚那句话让我有点不舒服。我想说清楚，但又怕讲太重……"></textarea>
 <div class="input-meta">
-<span>你的草稿不会公开，也不会显示给我看。生成时只会即时处理，不会在网页里保存。</span>
-<span><span id="charCount">0</span>/1200</span>
+<span>你的草稿不会公开。建议 500 字以内效果最好。</span>
+<span><span id="charCount">0</span>/500</span>
 </div>
 <div class="safety-note">
             涉及威胁、骚扰、暴力或严重冲突时，请先找可信任的人或专业人士，不要只依赖改写工具。
@@ -107,73 +107,25 @@
 
 <!-- Main Recommendation -->
 <div class="recommendation-card">
-<span class="result-tag" id="recommendationTag">最推荐发这一版</span>
+<span class="result-tag" id="recommendationTag">葵建议这样发：</span>
 <p class="result-text" id="recommendationResult"></p>
 <button class="copy-button" id="copyRecommendation">复制这版</button>
 </div>
 
-<!-- Why this is stable -->
+<!-- Kui's Insight / Stability Note -->
 <div class="stability-note">
-<h3>为什么这样比较稳</h3>
-<p class="stability-text" id="stabilityText"></p>
+<h3>为什么这样比较好</h3>
+<p class="stability-text" id="stabilityText">葵正在思考中...</p>
 </div>
 
-<!-- Quick Adjustments -->
-<div aria-label="二次调整" class="adjust-section">
-<div class="section-heading">
-<h3>这版还不太像你？</h3>
-<p>选一个方向，让葵再帮你微调一下。</p>
-</div>
-<div class="adjust-direction-grid">
-<button class="adjust-option" data-adjust-direction="natural" type="button">再自然一点</button>
-<button class="adjust-option" data-adjust-direction="shorter" type="button">再短一点</button>
-<button class="adjust-option" data-adjust-direction="less-humble" type="button">不要太客气</button>
-</div>
-<div class="adjusted-result-card" id="adjustedResultCard">
-<span class="adjusted-tag" id="adjustedTag">葵重新整理了一版</span>
-<p class="result-text" id="adjustedResult"></p>
-<button class="copy-button" data-copy="adjustedResult">复制这个版本</button>
-</div>
-</div>
+<!-- Quick Adjustments - HIDDEN IN MVP VERSION -->
+<div aria-label="二次调整" class="adjust-section" style="display: none;"></div>
 
-<!-- Other Versions Toggle -->
-<div class="other-versions-toggle">
-<button class="toggle-link" id="toggleOtherVersions" type="button">
-<span>看其他说法</span>
-<svg height="16" viewBox="0 0 24 24" width="16" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
-</button>
-</div>
+<!-- Other Versions - HIDDEN IN MVP VERSION -->
+<div class="other-versions-header" style="display: none;"></div>
+<div class="other-versions-content" id="otherVersionsContent" style="display: none;"></div>
 
-<!-- Other Versions Container -->
-<div class="other-versions-container" id="otherVersionsContainer">
-<div class="result-card">
-<span class="result-tag">短版</span>
-<h3>更直接一点</h3>
-<p class="result-text" id="shortResult"></p>
-<button class="copy-button" data-copy="shortResult">复制短版</button>
-</div>
-<div class="result-card">
-<span class="result-tag">温和版</span>
-<h3>更婉转一点</h3>
-<p class="result-text" id="letterResult"></p>
-<button class="copy-button" data-copy="letterResult">复制温和版</button>
-</div>
-<div class="result-card">
-<span class="result-tag">有边界版</span>
-<h3>更有立场一点</h3>
-<p class="result-text" id="calmResult"></p>
-<button class="copy-button" data-copy="calmResult">复制有边界版</button>
-</div>
-</div>
-
-<div class="light-feedback">
-<p>这封信，可以送出去了吗？</p>
-<div class="feedback-buttons">
-<button class="mini-option" data-feedback="yes">可以，我想送出去</button>
-<button class="mini-option" data-feedback="maybe">还想再改得更像我</button>
-<button class="mini-option" data-feedback="no">还不太像我想说的话</button>
-</div>
-</div>
+<div class="light-feedback" style="display: none;"></div>
 </section>
 <footer class="footer">
 <p>葵只帮你检查和整理表达，不替你决定关系。愿每一句要送出去的话，都能被温柔接住。</p>

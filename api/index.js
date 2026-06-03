@@ -50,17 +50,16 @@ function buildPrompt({ text }) {
   const ai = new GoogleGenAI({ apiKey });
   
   try {
-    const model = ai.getGenerativeModel({ model: 'gemini-1.5-flash' });
-    const result = await model.generateContent({
-      contents: [{ role: 'user', parts: [{ text: prompt }] }],
-      generationConfig: {
+    const response = await ai.models.generateContent({
+      model: 'gemini-2.5-flash',
+      contents: prompt,
+      config: {
         maxOutputTokens: 300,
         temperature: 0.4,
         responseMimeType: 'application/json'
       }
     });
-    const response = await result.response;
-    const text = response.text();
+    const text = response.text;
     return parseJsonFromText(text);
   } catch (error) {
     console.error('Gemini Error:', error.message);

@@ -157,9 +157,60 @@ async function callGemini(prompt, retryCount = 0) {
   }
 }
 
+function getFallbackResult(text, concern) {
+  const shortText = text.length > 20 ? text.substring(0, 20) + "..." : text;
+  
+  const fallbacks = {
+    "我怕太卑微": {
+      quoteResult: "原文听起来有点太迁就对方了。",
+      riskResult: "过度软化自己的需求，可能会让对方觉得这件事不重要。",
+      adviceResult: "直接表达你的想法，不用为了礼貌而否定自己的感受。",
+      shortResult: `关于刚才提到的，我还是想跟你确认一下：${shortText}`,
+      letterResult: `我想了一下还是想跟你说，关于刚才那件事，我其实是希望可以有更明确的答复。`,
+      calmResult: `我是认真想问这件事的。你方便的时候，我们可以直接沟通一下吗？`
+    },
+    "我怕太冲": {
+      quoteResult: "原文的语气比较直接，可能会带一点情绪。",
+      riskResult: "直接指责容易让沟通变成争执，导致对方产生防备心。",
+      adviceResult: "先表达自己的感受和疲累，再说明你希望如何解决问题。",
+      shortResult: `关于刚才那件事，我感觉有点累了，我们能好好聊聊吗？`,
+      letterResult: `我不是想吵架，只是同样的情况一直发生让我有点困扰。我们能沟通一下吗？`,
+      calmResult: `我想把这件事说清楚。目前的情况让我有点不舒服，希望能换个方式处理。`
+    },
+    "我怕对方误会": {
+      quoteResult: "原文的重点可能被解释淹没了。",
+      riskResult: "长篇大论的解释有时会让人抓不到重点，甚至产生新的误会。",
+      adviceResult: "直接说明原因，保持自然顺畅，不用过度担心对方的反应。",
+      shortResult: `刚才我可能没表达清楚，其实我是想说...`,
+      letterResult: `我不是故意不回/不理，只是刚才在忙/不知道怎么说。我想解释一下...`,
+      calmResult: `我想把刚才那件事说清楚，其实我的意思是：${shortText}`
+    },
+    "我怕关系变尴尬": {
+      quoteResult: "原文可能显得有点正式或沉重。",
+      riskResult: "太正式的语气在私讯里会显得生疏，增加沟通的压力。",
+      adviceResult: "语气轻一点，像平常聊天一样，给彼此一点空间。",
+      shortResult: `突然想问一下，你对刚才那件事怎么看？`,
+      letterResult: `我想跟你说一下刚才那件事，你不用急着回，有空再看就好。`,
+      calmResult: `我想简单说明一下我的想法，没有要吵架的意思，只是想让你知道。`
+    }
+  };
+
+  const selected = fallbacks[concern] || fallbacks["我怕对方误会"];
+  
+  // Mark as basic version clearly
+  return {
+    quoteResult: selected.quoteResult,
+    riskResult: selected.riskResult,
+    adviceResult: `[基础整理版本] ${selected.adviceResult}`,
+    shortResult: selected.shortResult,
+    letterResult: selected.letterResult,
+    calmResult: selected.calmResult
+  };
+}
+
 app.post('/api/generate', async (req, res) => {
+  const { text, concern, tone } = req.body || {};
   try {
-    const { text, concern, tone } = req.body || {};
     if (!text || !String(text).trim()) {
       return res.status(400).json({ error: '请先贴上你想整理的内容。' });
     }
@@ -173,7 +224,13 @@ app.post('/api/generate', async (req, res) => {
     console.error('API Error:', error);
     const status = error.status || 500;
     const isBusy = status === 429 || status === 503;
-    const message = isBusy ? error.message : '葵刚刚没有整理成功，可以稍后再试一次。';
+    
+    if (isBusy) {
+      // Return fallback result for busy errors
+      return res.json(getFallbackResult(String(text).trim(), concern));
+    }
+
+    const message = '葵刚刚没有整理成功，可以稍后再试一次。';
     res.status(status).json({ error: message });
   }
 });

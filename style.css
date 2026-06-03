@@ -500,10 +500,20 @@
       width: 100%;
       padding: 16px;
       font-size: 16px;
+      font-weight: 800;
+      border-radius: 999px;
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
+      cursor: pointer;
     }
 
     .recommendation-card .copy-button:hover {
-      background: #5A4431;
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+
+    .recommendation-card .copy-button:active {
+      transform: translateY(0) scale(0.98);
+      opacity: 0.9;
     }
 
     /* Why this is stable */
@@ -566,6 +576,11 @@
       display: block;
     }
 
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
     .other-versions-container .result-card {
       background: #fff;
       border-color: var(--line);
@@ -590,18 +605,28 @@
     }
 
     .other-versions-container .result-card .copy-button {
-      padding: 8px 20px;
-      font-size: 13px;
+      padding: 6px 18px;
+      font-size: 12px;
+      border-radius: 999px;
+      background: rgba(244, 201, 93, 0.1); /* 浅浅的向日葵黄背景 */
+      color: var(--muted);
+      border: 1px solid rgba(244, 201, 93, 0.4); /* 柔和的黄色边框 */
+      width: auto;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .copy-button:hover {
+    .other-versions-container .result-card .copy-button:hover {
       background: var(--sunflower);
       border-color: var(--sunflower);
+      color: var(--ink);
+    }
+
+    .other-versions-container .result-card .copy-button:active {
+      transform: scale(0.96);
+      background: #E5B94B; /* 按下时稍微加深的黄色 */
+      border-color: #E5B94B;
     }
 
 
@@ -910,6 +935,25 @@
       }
       .next-step-link {
         width: 100%;
+      }
+
+      /* Differentiated Copy Buttons on Mobile */
+      .other-versions-container .result-card .copy-button {
+        background: rgba(244, 201, 93, 0.15);
+        color: var(--muted);
+        border: 1px solid rgba(244, 201, 93, 0.5);
+        width: auto; /* 不再强制全宽，保持轻盈 */
+        padding: 8px 20px;
+        font-size: 13px;
+        font-weight: 600;
+        margin-top: 4px;
+        display: inline-block;
+      }
+
+      .other-versions-container .result-card .copy-button:active {
+        background: var(--sunflower);
+        color: var(--ink);
+        transform: scale(0.96);
       }
     }
 

@@ -28,10 +28,21 @@ function buildPrompt({ text }) {
 - 保留原意，不卑微、不冲、不过度道歉或讨好。
 - 像真人私讯，严禁客服或作文腔。
 - 只输出一个最推荐版本。
-- 只返回 JSON：{"recommendedResult": "推荐内容", "explanation": "为什么这样比较好的一句话解释"}`;
+- 必须返回合法 JSON 对象。不要输出任何 markdown 格式，不要包含 \`\`\`json，不要有任何解释文字。
+
+JSON 结构：
+{
+  "recommendedResult": "推荐内容",
+  "explanation": "为什么这样比较好的一句话解释"
+}`;
 }
 
 function parseJsonFromText(rawText) {
+  console.log("Gemini Raw Response Length:", rawText ? rawText.length : 0);
+  console.log("Gemini Raw Response:", rawText);
+
+  if (!rawText) throw new Error('这次整理失败，请再试一次。');
+
   const cleaned = rawText
     .replace(/^```json\s*/i, '')
     .replace(/^```\s*/i, '')
@@ -40,10 +51,17 @@ function parseJsonFromText(rawText) {
 
   try {
     return JSON.parse(cleaned);
-  } catch {
+  } catch (e) {
+    console.error('JSON Parse Error:', e.message);
     const match = cleaned.match(/\{[\s\S]*\}/);
-    if (match) return JSON.parse(match[0]);
-    throw new Error('Gemini did not return valid JSON.');
+    if (match) {
+      try {
+        return JSON.parse(match[0]);
+      } catch (innerE) {
+        console.error('JSON Inner Parse Error:', innerE.message);
+      }
+    }
+    throw new Error('这次整理失败，请再试一次。');
   }
 }
 
@@ -56,15 +74,26 @@ async function callGemini(prompt, retryCount = 0) {
       model: 'gemini-2.5-flash',
       contents: prompt,
       config: {
-        maxOutputTokens: 300,
+        maxOutputTokens: 2048,
         temperature: 0.4,
         responseMimeType: 'application/json'
       }
     });
+
+    // 检查是否因为 token 限制被截断
+    if (response.candidates && response.candidates[0] && response.candidates[0].finishReason === 'MAX_TOKENS') {
+      console.error('Gemini response was cut off because maxOutputTokens is too low.');
+    }
+
     const text = response.text;
     return parseJsonFromText(text);
   } catch (error) {
     console.error('Gemini Error:', error.message);
+    
+    if (error.message === '这次整理失败，请再试一次。') {
+      throw error;
+    }
+
     const isUnavailable = error.message?.includes('503') || error.message?.toLowerCase().includes('unavailable');
     const isRateLimit = error.message?.includes('429') || error.message?.toLowerCase().includes('quota');
 
